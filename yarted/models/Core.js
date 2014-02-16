@@ -12,7 +12,6 @@ Core.prototype.addConnection = function (conn) {
         console.log("Our YartedConnection received something. DEAL WITH IT!!!", data);
         for (connId in this.connections.items) {
             var c = this.connections.items[connId];
-            console.log(c);
             c.send(data);
         }
     }.bind(this));
@@ -23,7 +22,6 @@ Core.prototype.addConnection = function (conn) {
     conn.on("leave", this.leave);
 
     console.log("Connections: ", this.connections.length());
-    console.log("This: ",this);
     conn.emit("join", "chat");
 }
 

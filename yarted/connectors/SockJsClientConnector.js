@@ -13,8 +13,6 @@ var SockJsClientConnector = function (server, core) {
         var conn = new Connection(nativeConnection);
 
         //bind to "send" event of transparent connection and translate to native
-        //conn.on("send",nativeConnection.write);
-
         conn.on("send", function () {
             console.log("Send data to native conn")
             nativeConnection.write.apply(nativeConnection, arguments);

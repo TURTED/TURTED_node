@@ -40,7 +40,7 @@ Connection.prototype.receive = function (message) {
 
     console.log(this.emit("receive", message));
 
-    //temp thing, so something happens
+    //temp thing, so something happens at all. We treat native data like a message
     console.log(this.emit("message",message));
 }
 

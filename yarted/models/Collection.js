@@ -3,7 +3,6 @@ var Collection = function() {
 }
 
 Collection.prototype.add = function(key, val) {
-    console.log("Adding ",key,val);
     this.items[key] = val;
 }
 
