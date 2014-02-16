@@ -1,4 +1,4 @@
-var Connection = require('../rted/models/Connection')
+var Connection = require('../turted/models/Connection')
 
 exports.connectionHasId = function (test) {
     test.expect(1);

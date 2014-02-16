@@ -1,7 +1,7 @@
 var port = 80;
 var http = require('http');
 var node_static = require('node-static');
-var yarted = require('./yarted/yarted.js');
+var turted = require('./turted/turted.js');
 
 //some basic url handling
 var static_directory = new node_static.Server(__dirname + '/client');
@@ -18,12 +18,12 @@ server.addListener('upgrade', function (req, res) {
 });
 
 //instanciate a Core and a SockJs connector
-var core = new yarted.Core();
-var sockjsClientConnector = new yarted.SockJsClientConnector(server, core);
+var core = new turted.Core();
+var sockjsClientConnector = new turted.SockJsClientConnector(server, core);
 
 console.log(' [*] Listening on 0.0.0.0:' + port);
 server.listen(port, '0.0.0.0');
-console.log(yarted);
+console.log(turted);
 
 //var dispatcher = new YARTED.Dispatcher();
 //var dispatch = new YARTED.Dispatch("DISPATCH:DONE",{test:true},{channels: ["chat","log","moves"]});
