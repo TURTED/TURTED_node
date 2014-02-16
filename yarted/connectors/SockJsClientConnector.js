@@ -12,29 +12,29 @@ var SockJsClientConnector = function (server, core) {
     sockjs_server.on('connection', function (nativeConnection) {
         var conn = new Connection(nativeConnection);
 
-        //register connection in core
-        core.addConnection(conn);
-
         //bind to "send" event of transparent connection and translate to native
         //conn.on("send",nativeConnection.write);
 
-        conn.on("send",function() {
+        conn.on("send", function () {
             console.log("Send data to native conn")
-            nativeConnection.write.apply(this,arguments);
+            nativeConnection.write.apply(nativeConnection, arguments);
         });
 
         //forward native connection events to our own transparent connection
         //nativeConnection.on('data', conn.receive);
-        nativeConnection.on('data', function(data) {
-            console.log("Native Connection received ",data);
-            conn.receive.apply(this,arguments);
+        nativeConnection.on('data', function (data) {
+            console.log("Native Connection received ", data);
+            conn.receive.apply(conn, arguments);
         });
 
-        nativeConnection.on('close', function()  {
+        nativeConnection.on('close', function () {
             console.log("Native connection closed");
             core.removeConnection(conn);
-            conn.close.apply(this,arguments);
+            conn.close.apply(conn, arguments);
         });
+
+        //register connection in core
+        core.addConnection(conn);
     });
 
     sockjs_server.installHandlers(server, {prefix: '/yarted'});

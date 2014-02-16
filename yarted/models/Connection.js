@@ -1,5 +1,6 @@
-var util = require('util');
 var events = require('events');
+var util = require('util');
+
 /**
  * Connection is an abstraction of a native connection so we don't have to deal with client implementation
  *
@@ -8,6 +9,7 @@ var events = require('events');
  */
 
 var Connection = function (nativeConnection) {
+    this.bla = "foo";
     console.log("New connection");
     if (typeof nativeConnection === "undefined") {
         throw "NO_NATIVE_CONNECTION";
@@ -25,18 +27,26 @@ var Connection = function (nativeConnection) {
         }, '');
     }
     console.log(this.id);
+    events.EventEmitter.call(this);
 }
 
 util.inherits(Connection, events.EventEmitter);
+//Connection.prototype.__proto__ = events.EventEmitter.prototype;
 
 Connection.prototype.receive = function (message) {
     console.log("YartedConnection got a message", message);
-    this.emit("receive", message);
+    console.log("Protocol decoding cometh here. A central ConnectionHandler maybe?");
+    console.log("Then forward the decoded message to Core");
+
+    console.log(this.emit("receive", message));
+
+    //temp thing, so something happens
+    console.log(this.emit("message",message));
 }
 
 Connection.prototype.close = function () {
     console.log("YartedConnection close");
-    //this.emit("close");
+    this.emit("close");
 }
 
 Connection.prototype.send = function (message) {
