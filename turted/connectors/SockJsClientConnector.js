@@ -14,14 +14,14 @@ var SockJsClientConnector = function (server, core) {
 
         //bind to "send" event of transparent connection and translate to native
         conn.on("send", function () {
-            console.log("Send data to native conn")
+            //console.log("Send data to native conn")
             nativeConnection.write.apply(nativeConnection, arguments);
         });
 
         //forward native connection events to our own transparent connection
         //nativeConnection.on('data', conn.receive);
         nativeConnection.on('data', function (data) {
-            console.log("Native Connection received ", data);
+            //console.log("Native Connection received ", data);
             conn.receive.apply(conn, arguments);
         });
 
@@ -35,7 +35,7 @@ var SockJsClientConnector = function (server, core) {
         core.addConnection(conn);
     });
 
-    sockjs_server.installHandlers(server, {prefix: '/yarted'});
+    sockjs_server.installHandlers(server, {prefix: '/turted'});
 }
 
 module.exports = SockJsClientConnector;

@@ -1,7 +1,10 @@
 var Collection = require('./Collection');
+var Dispatch = require('./Dispatch');
+var Dispatcher = require('./Dispatcher');
 
 var Core = function () {
     this.connections = new Collection();
+    this.dispatcher = new Dispatcher();
 }
 
 Core.prototype.addConnection = function (conn) {
@@ -28,6 +31,11 @@ Core.prototype.addConnection = function (conn) {
 Core.prototype.removeConnection = function (conn) {
     this.connections.remove(conn.id);
     console.log("Connections: ", this.connections.length());
+}
+
+Core.prototype.dispatchEventDataTarget = function (e,data,targets) {
+    var dispatch = new Dispatch(e, data, targets);
+    this.dispatcher.dispatch(dispatch);
 }
 
 //Event handling functions, expect "this" to be the connection
