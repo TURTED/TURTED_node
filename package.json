@@ -1,0 +1,24 @@
+{
+  "name": "YARTED",
+  "version": "0.0.0-unreleasable",
+  "dependencies": {
+    "node-static": "0.5.9",
+    "sockjs": "*",
+    "lodash-node": "*"
+  },
+  "description": "Yet Another Real Time Event Dispatcher",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "real-time",
+    "event",
+    "dispatcher"
+  ],
+  "author": "Peter Dietrich",
+  "license": "ISC"
+}
