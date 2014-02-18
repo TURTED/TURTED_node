@@ -12,7 +12,7 @@ exports.emitsReceiveEvent = function (test) {
     var errTO = setTimeout(function() {
         test.ok(false,"Expected 'receive' event did not fire");
         test.done();
-    },100);
+    },50);
 
     natConn.on("receive",function() {
         clearTimeout(errTO);
@@ -29,7 +29,7 @@ exports.emitsCloseEvent = function (test) {
     var errTO = setTimeout(function() {
         test.ok(false,"Expected 'close' event did not fire");
         test.done();
-    },100);
+    },50);
 
     natConn.on("close",function() {
         clearTimeout(errTO);

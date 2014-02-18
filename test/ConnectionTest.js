@@ -13,8 +13,21 @@ exports.connectionIdsAreUnique = function (test) {
     var conn2 = new Connection({});
     test.notStrictEqual(conn1.id, conn2.id, "Connection IDs are unique");
     test.done();
-}
+};
 
-//exports.connectionEmitsIncomingEvents = function (test) {
-    //var conn = new Connection({});
-//}
+exports.connectionEmitsIncomingEvents = function (test) {
+    var conn = new Connection({});
+    test.expect(1);
+
+    var errTO = setTimeout(function () {
+        test.ok(false, "Expected 'YES:IT:WORKS' event did not fire");
+        test.done();
+    }, 50);
+
+    conn.on("YES:IT:WORKS", function () {
+        clearTimeout(errTO);
+        test.ok(true, "Package fired 'YES:IT:WORKS' event")
+        test.done();
+    })
+    conn.receive({type:"YES:IT:WORKS"});
+}

@@ -1,5 +1,6 @@
 var events = require('events');
 var util = require('util');
+var RawData = require('./RawData');
 
 /**
  * Connection is an abstraction of a native connection so we don't have to deal with client implementation
@@ -33,14 +34,21 @@ util.inherits(Connection, events.EventEmitter);
 //Connection.prototype.__proto__ = events.EventEmitter.prototype;
 
 Connection.prototype.receive = function (message) {
-    console.log("YartedConnection got a message", message);
+    //console.log("Abstracted connection got a message", message);
+
     //decode incoming message
+    var rd = new RawData(message);
+
     //if it is a valid packet, emit event type from package
+    if (rd.isValid()) {
+        var t = rd.getType();
+        var d= rd.getData();
 
-    console.log(this.emit("receive", message));
-
-    //temp thing, so something happens at all. We treat native data like a message
-    console.log(this.emit("message",message));
+        //emit named event type
+        this.emit(t,d);
+    //} else {
+        //well, what should we do? For now, we drop it
+    }
 }
 
 Connection.prototype.close = function () {
