@@ -1,0 +1,26 @@
+digraph Objects {
+
+	Connection -> ConnectionManager [label="registers"]
+
+	SockJsClientConnector	-> Connection [label="creates"]
+
+	Connection -> NativeConnection [label="encapsulates"]
+	NativeConnection -> Connection
+
+	Connection -> ProtocolHandler [label="translates data"]
+	ProtocolHandler -> Connection
+
+
+	Client -> TURTED_Protocol
+	TURTED_Protocol -> Client
+	TURTED_Protocol -> SockJs
+	SockJs -> TURTED_Protocol
+	SockJs -> NativeConnection
+	NativeConnection -> SockJs
+
+	ConnectionManager ->Dispatcher
+
+	ApeInlinePushConnector -> Dispatcher [label="external event"]
+
+	Dispatcher -> Connection [label="send event"]
+}

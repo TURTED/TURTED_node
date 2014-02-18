@@ -7,22 +7,22 @@ var turted = require('./turted/turted.js');
 var static_directory = new node_static.Server(__dirname + '/client');
 var server = http.createServer();
 
-//instanciate a Core and a SockJs connector
-var core = new turted.Core();
+//instanciate a Dispatcher and a SockJs connector
+var connMan = new turted.ConnectionManager();
+var dispatcher = new turted.Dispatcher(connMan);
 
 //init push connector
 var pushPrefix = "/push/?";
 var pushAuthToken = "IamAllowed2PUSH!!!";
 var pushRegExp = new RegExp(pushPrefix);
-var pusher = new turted.PushConnector(core, pushPrefix, pushAuthToken);
+var pusher = new turted.ApeInlinePushConnector(dispatcher, pushPrefix, pushAuthToken);
 
 server.addListener('request', function (req, res) {
     if (pushRegExp.test(req.url)) {
         pusher.push(req);
     } else {
-        res.end();
+        static_directory.serve(req, res);
     }
-    static_directory.serve(req, res);
 });
 
 server.addListener('upgrade', function (req, res) {
@@ -30,7 +30,7 @@ server.addListener('upgrade', function (req, res) {
 });
 
 //now instanciate sock js
-var sockjsClientConnector = new turted.SockJsClientConnector(server, core);
+var sockjsClientConnector = new turted.SockJsClientConnector(server, connMan);
 
 console.log(' [*] Listening on 0.0.0.0:' + port);
 server.listen(port, '0.0.0.0');

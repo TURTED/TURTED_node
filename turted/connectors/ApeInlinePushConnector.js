@@ -1,15 +1,15 @@
 var url = require('url');
 
-var PushConnector = function (core, prefix, authToken) {
+var ApeInlinePushConnector = function (dispatcher, prefix, authToken) {
     console.log("Init push connector server")
-    this.core = core;
+    this.dispatcher = dispatcher;
     this.prefix = prefix
     this.authToken = authToken;
 
-    //take parameters from request, create a dispatch and send it to core
+    //take parameters from request, create a dispatch and send it to dispatcher
 }
 
-PushConnector.prototype.push = function(req) {
+ApeInlinePushConnector.prototype.push = function(req) {
     var pushUrl = req.url.replace(this.prefix,'');
 
     //for the time being, this is oriented on the old sfTurtedPlugin/APE inline push structure, see ape-project.org
@@ -18,7 +18,13 @@ PushConnector.prototype.push = function(req) {
     }
 
     console.log(pushUrl);
-    var pushData = JSON.parse(pushUrl);
+    try {
+        var pushData = JSON.parse(pushUrl);
+    } catch (ex) {
+        console.log("Unexpected format");
+        return false;
+        pushData = pushUrl;
+    }
     console.log(pushData);
 
     //expect an array of objects with cmd and params
@@ -50,10 +56,10 @@ PushConnector.prototype.push = function(req) {
                 channels: channel
             }
 
-            this.core.dispatchEventDataTarget(event,data,targets);
+            this.dispatcher.dispatchEventDataTarget(event,data,targets);
         }
     }
 
 }
 
-module.exports = PushConnector;
+module.exports = ApeInlinePushConnector;

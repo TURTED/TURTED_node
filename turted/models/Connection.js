@@ -9,8 +9,7 @@ var util = require('util');
  */
 
 var Connection = function (nativeConnection) {
-    this.bla = "foo";
-    console.log("New connection");
+    //console.log("New connection");
     if (typeof nativeConnection === "undefined") {
         throw "NO_NATIVE_CONNECTION";
     }
@@ -26,7 +25,7 @@ var Connection = function (nativeConnection) {
             return p + (Math.random() * 1e18).toString(36)
         }, '');
     }
-    console.log(this.id);
+    //console.log(this.id);
     events.EventEmitter.call(this);
 }
 

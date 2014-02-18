@@ -1,3 +1,4 @@
 exports.SockJsClientConnector = require('./connectors/SockJsClientConnector');
-exports.PushConnector = require('./connectors/PushConnector');
-exports.Core = require('./models/Core');
+exports.ApeInlinePushConnector = require('./connectors/ApeInlinePushConnector');
+exports.Dispatcher = require('./models/Dispatcher');
+exports.ConnectionManager = require('./models/ConnectionManager');

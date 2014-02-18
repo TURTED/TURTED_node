@@ -1,13 +1,11 @@
 var Collection = require('./Collection');
 var Dispatch = require('./Dispatch');
-var Dispatcher = require('./Dispatcher');
 
-var Core = function () {
+var ConnectionManager = function () {
     this.connections = new Collection();
-    this.dispatcher = new Dispatcher();
 }
 
-Core.prototype.addConnection = function (conn) {
+ConnectionManager.prototype.addConnection = function (conn) {
     this.connections.add(conn.id, conn);
 
     //bind to connection events
@@ -25,34 +23,31 @@ Core.prototype.addConnection = function (conn) {
     conn.on("leave", this.leave);
 
     console.log("Connections: ", this.connections.length());
+
+    //only for testing
     conn.emit("join", "chat");
 }
 
-Core.prototype.removeConnection = function (conn) {
+ConnectionManager.prototype.removeConnection = function (conn) {
     this.connections.remove(conn.id);
     console.log("Connections: ", this.connections.length());
 }
 
-Core.prototype.dispatchEventDataTarget = function (e,data,targets) {
-    var dispatch = new Dispatch(e, data, targets);
-    this.dispatcher.dispatch(dispatch);
-}
-
 //Event handling functions, expect "this" to be the connection
-Core.prototype.message = function (message) {
-    console.log("Here Core! ", this.id, " sent ", message);
+ConnectionManager.prototype.message = function (message) {
+    console.log("Here ConnectionManager! ", this.id, " sent ", message);
 }
 
-Core.prototype.ident = function (id, username, token) {
+ConnectionManager.prototype.ident = function (id, username, token) {
     console.log("IDENT");
 }
 
-Core.prototype.join = function (channel) {
+ConnectionManager.prototype.join = function (channel) {
     console.log("JOIN", channel);
 }
 
-Core.prototype.leave = function (channel) {
+ConnectionManager.prototype.leave = function (channel) {
     console.log("LEAVE", channel);
 }
 
-module.exports = Core;
+module.exports = ConnectionManager;

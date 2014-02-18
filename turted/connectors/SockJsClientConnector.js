@@ -1,9 +1,9 @@
 var Connection = require('../models/Connection');
 var sockjs = require('sockjs');
 
-var SockJsClientConnector = function (server, core) {
+var SockJsClientConnector = function (server, connMan) {
     console.log("Init sock.js server")
-    this.core = core;
+    this.connMan = connMan;
 
     // all specifics for the socks.js connection go in here
 
@@ -27,12 +27,12 @@ var SockJsClientConnector = function (server, core) {
 
         nativeConnection.on('close', function () {
             console.log("Native connection closed");
-            core.removeConnection(conn);
+            connMan.removeConnection(conn);
             conn.close.apply(conn, arguments);
         });
 
-        //register connection in core
-        core.addConnection(conn);
+        //register connection in connMan
+        connMan.addConnection(conn);
     });
 
     sockjs_server.installHandlers(server, {prefix: '/turted'});

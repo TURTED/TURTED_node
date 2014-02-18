@@ -3,13 +3,13 @@
 var tests = [
     //"example",
     "ConnectionTest",
-    "CoreTest",
+    //"ConnectionManagerTest",
+    "RawDataTest",
 ];
 
 for (var i = 0; i<tests.length;i++) {
     var testName = tests[i];
     exports[testName] = require('./'+testName);
 }
-
 
 
