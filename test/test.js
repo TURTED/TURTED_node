@@ -5,6 +5,7 @@ var tests = [
     "ConnectionTest",
     //"ConnectionManagerTest",
     "RawDataTest",
+    "MockSockTest",
 ];
 
 for (var i = 0; i<tests.length;i++) {

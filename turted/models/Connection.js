@@ -34,8 +34,8 @@ util.inherits(Connection, events.EventEmitter);
 
 Connection.prototype.receive = function (message) {
     console.log("YartedConnection got a message", message);
-    console.log("Protocol decoding cometh here. A central ConnectionHandler maybe?");
-    console.log("Then forward the decoded message to Core");
+    //decode incoming message
+    //if it is a valid packet, emit event type from package
 
     console.log(this.emit("receive", message));
 

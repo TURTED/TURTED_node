@@ -14,3 +14,7 @@ exports.connectionIdsAreUnique = function (test) {
     test.notStrictEqual(conn1.id, conn2.id, "Connection IDs are unique");
     test.done();
 }
+
+//exports.connectionEmitsIncomingEvents = function (test) {
+    //var conn = new Connection({});
+//}
