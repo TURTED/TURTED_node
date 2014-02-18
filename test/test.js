@@ -3,7 +3,7 @@
 var tests = [
     //"example",
     "ConnectionTest",
-    //"ConnectionManagerTest",
+    "ConnectionManagerTest",
     "RawDataTest",
     "MockSockTest",
 ];

@@ -1,4 +1,3 @@
-var MockSock = require('../mock/MockSock');
 var Connection = require('../turted/models/Connection')
 var ConnectionManager = require('../turted/models/ConnectionManager')
 
@@ -13,14 +12,13 @@ exports.connManRegistersConnections = function (test) {
     test.ok(connMan.connections.has(conn1.id),"Conn1 got registered");
     test.ok(connMan.connections.has(conn2.id),"Conn2 got registered");
 
-    connMan.removeConnection(conn2);
-    test.ok(!connMan.connections.has(conn2.id),"Conn1 got unregistered");
+    conn1.close();
+    //connMan.removeConnection(conn2);
+    test.equal(connMan.connections.has(conn1.id),false,"Conn1 got unregistered");
 
     test.done();
 }
 
-exports.connManStoresUser = function(test) {
-    var nativeConn = new MockSock();
-    var conn1 = new Connection({});
-
-}
+//exports.connManStoresUser = function(test) {
+    //var conn1 = new Connection({});
+//}

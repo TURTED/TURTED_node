@@ -42,17 +42,17 @@ Connection.prototype.receive = function (message) {
     //if it is a valid packet, emit event type from package
     if (rd.isValid()) {
         var t = rd.getType();
-        var d= rd.getData();
+        var d = rd.getData();
 
         //emit named event type
-        this.emit(t,d);
-    //} else {
+        this.emit(t, d);
+        //} else {
         //well, what should we do? For now, we drop it
     }
 }
 
 Connection.prototype.close = function () {
-    console.log("YartedConnection close");
+    //console.log("Abstract connection close");
     this.emit("close");
 }
 
