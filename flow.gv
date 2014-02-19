@@ -7,10 +7,6 @@ digraph Objects {
 	Connection -> NativeConnection [label="encapsulates"]
 	NativeConnection -> Connection
 
-	Connection -> ProtocolHandler [label="translates data"]
-	ProtocolHandler -> Connection
-
-
 	Client -> TURTED_Protocol
 	TURTED_Protocol -> Client
 	TURTED_Protocol -> SockJs
@@ -19,6 +15,10 @@ digraph Objects {
 	NativeConnection -> SockJs
 
 	ConnectionManager ->Dispatcher
+	UserManager ->ConnectionManager
+	ConnectionManager ->UserManager
+	ChannelManager ->ConnectionManager
+	ConnectionManager ->ChannelManager
 
 	ApeInlinePushConnector -> Dispatcher [label="external event"]
 
