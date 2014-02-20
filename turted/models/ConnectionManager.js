@@ -3,7 +3,8 @@ var Dispatch = require('./Dispatch');
 
 var ConnectionManager = function () {
     this.connections = new Collection();
-
+    this.users = new Collection();
+    this.channels = new Collection();
 }
 
 ConnectionManager.prototype.addConnection = function (conn) {
@@ -19,6 +20,10 @@ ConnectionManager.prototype.addConnection = function (conn) {
         //here, "this" is the connection
         connMan.removeConnection(this);
         //console.log("disconnected");
+    });
+
+    conn.on("OK:identified", function() {
+
     });
 
     //console.log("Connections: ", this.connections.length());
