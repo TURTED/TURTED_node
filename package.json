@@ -1,5 +1,5 @@
 {
-    "name": "YARTED",
+    "name": "TURTED",
     "version": "0.0.0-unreleasable",
     "dependencies": {
         "node-static": "0.5.9",
@@ -7,7 +7,7 @@
         "lodash-node": "*",
         "nodeunit": "*"
     },
-    "description": "Yet Another Real Time Event Dispatcher",
+    "description": "The Universal Real Time Event Dispatcher",
     "main": "server.js",
     "directories": {
         "test": "test"
