@@ -7,8 +7,13 @@ var turted = require('./turted/turted.js');
 var static_directory = new node_static.Server(__dirname + '/client');
 var server = http.createServer();
 
+//instanciate an authenticator for checking incoming identification requests
+var authTokenPrefix = "qwer";
+var authTokenSuffix = "asdf";
+var auth = new turted.TokenAuthenticator(authTokenPrefix, authTokenSuffix, "md5");
+
 //instanciate a Dispatcher and a SockJs connector
-var connMan = new turted.ConnectionManager();
+var connMan = new turted.ConnectionManager(auth);
 var dispatcher = new turted.Dispatcher(connMan);
 
 //init push connector

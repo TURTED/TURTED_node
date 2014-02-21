@@ -43,3 +43,12 @@ exports.getRawDataComponents = function (test) {
 
     test.done();
 }
+
+exports.createRawData = function (test) {
+    test.expect(1);
+
+    var rd = new RawData().create("ident",{"user": "Turtle", "password": "12345"});
+
+    test.deepEqual(rd.toPlainObject(), { type: "ident", data: { user: "Turtle", password: 12345}});
+    test.done();
+}
