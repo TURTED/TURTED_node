@@ -24,6 +24,9 @@ digraph Objects {
 	ConnectionManager ->ConnectionHandler
 
 	ApeInlinePushConnector -> Dispatcher [label="external event"]
+	#FileTailConnector -> Dispatcher
+	#RedisPubSubConnector -> Dispatcher	
+	#RabbitMQConnector -> Dispatcher
 
 	Dispatcher -> Connection [label="send event"]
 }
