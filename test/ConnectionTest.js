@@ -24,7 +24,7 @@ exports.connectionEmitsIncomingEvents = function (test) {
         test.done();
     }, 50);
 
-    conn.on("YES:IT:WORKS", function () {
+    conn.on("RX:YES:IT:WORKS", function () {
         clearTimeout(errTO);
         test.ok(true, "Package fired 'YES:IT:WORKS' event")
         test.done();

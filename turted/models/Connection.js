@@ -44,8 +44,8 @@ Connection.prototype.receive = function (message) {
         var t = rd.getType();
         var d = rd.getData();
 
-        //emit named event type
-        this.emit(t, d);
+        //emit named event type with RX prefix to avoid client sending "internal" commands as events
+        this.emit("RX:" + t.toUpperCase(), d);
         //} else {
         //well, what should we do? For now, we drop it
     }

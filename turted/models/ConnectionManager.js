@@ -1,19 +1,30 @@
 var Collection = require('./Collection');
 var Dispatch = require('./Dispatch');
+var UserManager = require('./UserManager');
+var ChannelManager = require('./ChannelManager');
 
-var ConnectionManager = function () {
+var ConnectionManager = function (authenticator) {
+    this.authenticator = authenticator;
+    this.userManager = new UserManager();
+    this.channelManager = new ChannelManager();
+
     this.connections = new Collection();
     this.users = new Collection();
     this.channels = new Collection();
 }
 
 ConnectionManager.prototype.addConnection = function (conn) {
-    this.connections.add(conn.id, conn);
     var connMan = this;
+    var userMan = this.userManager;
+    var chanMan = this.channelManager;
+
+    this.connections.add(conn.id, conn);
 
     //bind to known protocol events
     conn.on("message", this.message);
-    conn.on("ident", this.ident);
+
+    conn.on("RX:IDENT", userMan.handleIdent);
+
     conn.on("join", this.join);
     conn.on("leave", this.leave);
     conn.on("close", function() {
@@ -44,6 +55,9 @@ ConnectionManager.prototype.message = function (message) {
 ConnectionManager.prototype.ident = function (id, username, token) {
     //the client wants to authenticate
     console.log("IDENT");
+    console.log("THis",this);
+    console.log("arg1:",id);
+    console.log("arg2:",username);
 }
 
 ConnectionManager.prototype.join = function (channel) {
