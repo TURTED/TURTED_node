@@ -1,4 +1,5 @@
-var Connection = require('../turted/models/Connection')
+var Connection = require('../turted/models/Connection');
+var MockSock = require('./mock/MockSock');
 
 exports.connectionHasId = function (test) {
     test.expect(1);
@@ -30,4 +31,22 @@ exports.connectionEmitsIncomingEvents = function (test) {
         test.done();
     })
     conn.receive({type:"YES:IT:WORKS"});
+}
+
+exports.connectionEmitsClose = function (test) {
+    var nat = new MockSock();
+    var conn = new Connection(nat);
+    test.expect(1);
+
+    var errTO = setTimeout(function () {
+        test.ok(false, "Expected 'close' event did not fire");
+        test.done();
+    }, 50);
+
+    conn.on("close", function () {
+        clearTimeout(errTO);
+        test.ok(true, "Connection fired 'close' event")
+        test.done();
+    })
+    nat.close();
 }

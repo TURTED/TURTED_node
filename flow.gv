@@ -1,6 +1,6 @@
 digraph Objects {
 
-	Connection -> ConnectionManager [label="registers"]
+	Connection -> ConnectionHandler [label="registers"]
 
 	SockJsClientConnector	-> Connection [label="creates"]
 
@@ -14,11 +14,14 @@ digraph Objects {
 	SockJs -> NativeConnection
 	NativeConnection -> SockJs
 
-	ConnectionManager ->Dispatcher
-	UserManager ->ConnectionManager
-	ConnectionManager ->UserManager
-	ChannelManager ->ConnectionManager
-	ConnectionManager ->ChannelManager
+	ConnectionHandler -> ConnectionManager
+	ConnectionHandler -> UserManager
+	ConnectionHandler -> ChannelManager
+
+	ConnectionHandler ->Dispatcher
+	UserManager ->ConnectionHandler
+	ChannelManager ->ConnectionHandler
+	ConnectionManager ->ConnectionHandler
 
 	ApeInlinePushConnector -> Dispatcher [label="external event"]
 

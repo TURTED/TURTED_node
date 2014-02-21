@@ -12,8 +12,12 @@ var authTokenPrefix = "qwer";
 var authTokenSuffix = "asdf";
 var auth = new turted.TokenAuthenticator(authTokenPrefix, authTokenSuffix, "md5");
 
-//instanciate a Dispatcher and a SockJs connector
-var connMan = new turted.ConnectionManager(auth);
+var connMan = new turted.ConnectionManager();
+var userMan = new turted.UserManager(auth);
+var chanMan = new turted.ChannelManager();
+
+//instanciate a central connection handler, Dispatcher and a SockJs connector
+var connHandler = new turted.ConnectionHandler(connMan, userMan, chanMan);
 var dispatcher = new turted.Dispatcher(connMan);
 
 //init push connector

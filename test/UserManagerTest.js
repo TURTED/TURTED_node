@@ -36,7 +36,6 @@ exports.handleIdentSendsPositiveResponseToConnection = function (test) {
 
     conn.send = function (data) {
         //usermanger needs to call send on connection
-        console.log("I HAVE BEEN CALLED");
         test.deepEqual(data, {type: "IDENTIFIED", data: {}}, "UserManager sent negative response to connection");
         test.done();
     }

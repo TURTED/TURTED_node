@@ -17,6 +17,10 @@ var Connection = function (nativeConnection) {
 
     this.nativeConnection = nativeConnection;
 
+    if (typeof nativeConnection.on !== "undefined") {
+        nativeConnection.on("close",this.close.bind(this));
+    }
+
     if (nativeConnection.id) {
         this.id = nativeConnection.id;
     } else {
@@ -54,7 +58,7 @@ Connection.prototype.receive = function (message) {
 
 Connection.prototype.close = function () {
     //console.log("Abstract connection close");
-    this.emit("close");
+    this.emit("close",this);
 }
 
 Connection.prototype.send = function (message) {

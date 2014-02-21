@@ -3,12 +3,16 @@
 var tests = [
     //"example",
     "ConnectionTest",
-    "ConnectionManagerTest",
+    "ConnectionHandlerTest",
     "RawDataTest",
     "MockSockTest",
     "TokenAuthenticatorTest",
+    "ConnectionManagerTest",
     "UserManagerTest",
+    "ChannelManagerTest",
 ];
+
+//tests = ["ConnectionHandlerTest"];
 
 for (var i = 0; i<tests.length;i++) {
     var testName = tests[i];
