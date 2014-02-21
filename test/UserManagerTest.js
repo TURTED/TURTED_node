@@ -13,20 +13,13 @@ exports.handleIdentSendsNegativeResponseToConnection = function (test) {
 
     var userMan = new UserManager(auth);
 
-    /*
     conn.send = function (data) {
         //usermanger needs to call send on connection
-        console.log("I HAVE BEEN CALLED");
-        clearTimeout(errTO);
-        test.ok(true, "UserManager sent negative response to connection");
-        test.done();
+        test.deepEqual(data, {type: "UNIDENTIFIED", data: {}}, "UserManager sent negative response to connection");
     }
-    */
 
-    userMan.handleIdent({id: 123, username: "asdf", token: "9856099"}).bind(conn);
-    console.log("Hier");
+    userMan.handleIdent(conn, {id: 123, username: "asdf", token: "9856099"});
     test.done();
-    console.log("Hier auch");
 };
 
 exports.handleIdentSendsPositiveResponseToConnection = function (test) {
@@ -41,18 +34,13 @@ exports.handleIdentSendsPositiveResponseToConnection = function (test) {
 
     var userMan = new UserManager(auth);
 
-    var errTO = setTimeout(function () {
-        test.ok(false, "Expected reponse event did not fire");
-        test.done();
-    }, 50);
-
     conn.send = function (data) {
-        clearTimeout(errTO);
-        test.ok(true, "UserManager sent negative response to connection");
+        //usermanger needs to call send on connection
+        console.log("I HAVE BEEN CALLED");
+        test.deepEqual(data, {type: "IDENTIFIED", data: {}}, "UserManager sent negative response to connection");
         test.done();
     }
 
-    userMan.handleIdent({id: 123, username: "asdf", token: "9856099"}).bind(conn);
-    test.done();
+    userMan.handleIdent(conn, {id: 123, username: "asdf", token: "9856099"});
 };
 

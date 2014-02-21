@@ -23,10 +23,10 @@ ConnectionManager.prototype.addConnection = function (conn) {
     //bind to known protocol events
     conn.on("message", this.message);
 
-    conn.on("RX:IDENT", userMan.handleIdent);
+    conn.on("RX:IDENT", userMan.handleIdent.bind(userMan));
+    conn.on("RX:JOIN", chanMan.handleJoin.bind(chanMan));
+    conn.on("RX:LEAVE", chanMan.handleLeave.bind(chanMan))
 
-    conn.on("join", this.join);
-    conn.on("leave", this.leave);
     conn.on("close", function() {
         //here, "this" is the connection
         connMan.removeConnection(this);
@@ -46,28 +46,10 @@ ConnectionManager.prototype.removeConnection = function (conn) {
     //console.log("Connections: ", this.connections.length());
 }
 
-//protocol event handling functions, expect "this" to be the connection
-ConnectionManager.prototype.message = function (message) {
+//protocol event handling functions
+ConnectionManager.prototype.message = function (conn, message) {
     //the client sent a message
-    console.log("Here ConnectionManager! ", this.id, " sent ", message);
-}
-
-ConnectionManager.prototype.ident = function (id, username, token) {
-    //the client wants to authenticate
-    console.log("IDENT");
-    console.log("THis",this);
-    console.log("arg1:",id);
-    console.log("arg2:",username);
-}
-
-ConnectionManager.prototype.join = function (channel) {
-    //the client wants to join a channel
-    console.log("JOIN", channel);
-}
-
-ConnectionManager.prototype.leave = function (channel) {
-    //the client wants to leave a channel
-    console.log("LEAVE", channel);
+    console.log("Here ConnectionManager! ", conn.id, " sent ", message);
 }
 
 module.exports = ConnectionManager;

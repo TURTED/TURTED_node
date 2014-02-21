@@ -1,11 +1,16 @@
-var UserManager = function() {
-
+var RawData = require('./RawData');
+var UserManager = function(auth) {
+    this.auth = auth;
 }
 
-UserManager.prototype.handleIdent = function(data,arg2) {
-    console.log("This ",this);
-    console.log("Data ", data);
-    console.log("arg2",arg2)
+UserManager.prototype.handleIdent = function(conn,data) {
+    var response = "UNIDENTIFIED";
+    if ((data.hasOwnProperty("username")) && (data.hasOwnProperty("token"))) {
+        if (this.auth.verify(data.username,data.token)) {
+            response="IDENTIFIED";
+        }
+    }
+    conn.send(new RawData().create(response,{}).toPlainObject());
 }
 
 module.exports = UserManager;

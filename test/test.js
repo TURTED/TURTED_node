@@ -7,7 +7,7 @@ var tests = [
     "RawDataTest",
     "MockSockTest",
     "TokenAuthenticatorTest",
-    //"UserManagerTest",
+    "UserManagerTest",
 ];
 
 for (var i = 0; i<tests.length;i++) {
