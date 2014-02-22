@@ -3,14 +3,14 @@ var http = require('http');
 var node_static = require('node-static');
 var turted = require('./turted/turted.js');
 
+var config = require('./turted/config.js');
+
 //some basic url handling
 var static_directory = new node_static.Server(__dirname + '/client');
 var server = http.createServer();
 
 //instanciate an authenticator for checking incoming identification requests
-var authTokenPrefix = "qwer";
-var authTokenSuffix = "asdf";
-var auth = new turted.TokenAuthenticator(authTokenPrefix, authTokenSuffix, "md5");
+var auth = new turted.TokenAuthenticator(config.authTokenPrefix, config.authTokenSuffix, config.authTokenHashType);
 
 var connMan = new turted.ConnectionManager();
 var userMan = new turted.UserManager(auth);
@@ -39,7 +39,7 @@ server.addListener('upgrade', function (req, res) {
 });
 
 //now instanciate sock js
-var sockjsClientConnector = new turted.SockJsClientConnector(server, connMan);
+var sockjsClientConnector = new turted.SockJsClientConnector(server, connHandler);
 
 console.log(' [*] Listening on 0.0.0.0:' + port);
 server.listen(port, '0.0.0.0');

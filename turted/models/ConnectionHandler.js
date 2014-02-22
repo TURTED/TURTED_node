@@ -11,21 +11,14 @@ ConnectionHandler.prototype.addConnection = function (conn) {
     this.userManager.addConnection(conn);
     this.channelManager.addConnection(conn);
 
-    //bind to known protocol events
-    conn.on("message", this.message);
 
-    conn.on("close", function() {
-        //here, "this" is the connection
-        connMan.removeConnection(this);
-        //console.log("disconnected");
-    });
+    //we'll see later how this will be taken care of...
+    conn.on("RX:MESSAGE", this.message);
 
-    conn.on("OK:identified", function() {
-
-    });
-
-    //console.log("Connections: ", this.connections.length());
-
+    //simple echo test
+    conn.on("RX:ECHO",function(conn, data) {
+        conn.send(JSON.stringify({type:"message",data:data}));
+    })
 }
 
 //protocol event handling functions

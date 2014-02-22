@@ -21,7 +21,7 @@ var SockJsClientConnector = function (server, connHandler) {
         //forward native connection events to our own transparent connection
         //nativeConnection.on('data', conn.receive);
         nativeConnection.on('data', function (data) {
-            //console.log("Native Connection received ", data);
+            console.log("Native Connection received ", data);
             conn.receive.apply(conn, arguments);
         });
 

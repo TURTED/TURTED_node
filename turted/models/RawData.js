@@ -16,6 +16,17 @@ RawData.prototype.validate = function () {
         return false;
     }
 
+    if (typeof rd === "string") {
+        try {
+            var o = JSON.parse(rd);
+            if (typeof o === "object") {
+                rd=o;
+            }
+        } catch (ex) {
+            //console.log(ex);
+        }
+    }
+
     if (typeof rd !== "object") {
         this.reject("Raw data was not an object");
         return false;
@@ -64,9 +75,9 @@ RawData.prototype.getData = function () {
     }
 }
 
-RawData.prototype.create = function(type, data) {
+RawData.prototype.create = function (type, data) {
     this.type = type;
-    this.data  =data;
+    this.data = data;
     this.validate();
     return this;
 }

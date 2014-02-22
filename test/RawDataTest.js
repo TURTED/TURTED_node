@@ -52,3 +52,21 @@ exports.createRawData = function (test) {
     test.deepEqual(rd.toPlainObject(), { type: "ident", data: { user: "Turtle", password: 12345}});
     test.done();
 }
+
+exports.decodeStringifiedJson = function(test) {
+    test.expect(2);
+
+    var rd = new RawData('{"type":"message","data":"Hallo"}');
+    test.strictEqual(rd.isValid(),true,"Is valid");
+    test.deepEqual(rd.toPlainObject(), {"type":"message","data":"Hallo"},"string gets converted to object");
+    test.done();
+}
+
+exports.handlesNonJsonStrings = function(test) {
+    test.expect(1);
+
+    var rd = new RawData('"tymessage","data":"Hallo"}');
+    test.deepEqual(rd.isValid(),false,"ignores incorrect JSON or plain strings");
+    test.done();
+
+}
