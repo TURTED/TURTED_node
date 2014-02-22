@@ -10,7 +10,7 @@ Users can log in and join channels so the server can push messages to selected c
 
 Example (work in progress, but that's roughly what I want to end up with):
 
-PHP Server
+*PHP Server*
 ```php
 $targets = array("users" => "xosofox", "channels"=>array("chat","chatlog"));
 $data = array("msg" => "What... is the Airspeed Velocity of an Unladen Swallow?", "from" => "Bridgekeeper"); 
@@ -46,4 +46,25 @@ It also might be that I'm "over-engineering" the whole thing. As said, it's also
 
 [![Build Status](https://travis-ci.org/TURTED/TURTED_node.png?branch=master)](https://travis-ci.org/TURTED/TURTED_node)
 
+#Glossary#
+Since TURTED is intended to dispatch/emit events from any arbitrary backend app via a central server to many clients, we have three parties included:
+* the backend app (PHP, Java, ...)
+* the TURTED server for handling real-time connections (node.js or ape)
+* the clients (browsers, connected via websocket or any other connection allowing push data)
 
+For each of these connections, data needs to follow certain structures.
+*All data is encoded using JSON*
+
+#Protocol#
+##Backend to Server
+##Server to Client
+##Client to Server
+
+#Connectors#
+##Client to Server
+*sock.js
+
+##Backend to Server
+*ApeInlinePushConnector (for compatibility)
+*Redis Pub/Sub (close future plan)
+*RabbitMQ (far future plan)
