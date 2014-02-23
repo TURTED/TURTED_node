@@ -34,11 +34,9 @@ var TURTED = function (sockjs_url) {
         }
         sockjs.onclose = function () {
             print('[*] close');
-            setTimeout(function () {
-                reconnect();
-            }, 1000);
+            setTimeout(this.reconnect.bind(this),1000);
             print('[-] retry');
-        };
+        }.bind(this);;
 
         this.nativeConnection = sockjs;
     }

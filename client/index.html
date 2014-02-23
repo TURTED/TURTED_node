@@ -19,14 +19,11 @@
 
         <script type="text/javascript">
 
-            var sockjs_url = '/turted';
-            if (document.location.protocol === "file:") {
-                sockjs_url = 'http://localhost/turted';
-            }
+            sockjs_url = 'http://localhost/turted';
 
             var turted = new TURTED(sockjs_url);
             turted.on("message", function(data) {
-                alert(data)
+                print("->",data.data);
             })
 
             var sockjs;
