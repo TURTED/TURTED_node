@@ -22,11 +22,14 @@
             sockjs_url = 'http://localhost/turted';
 
             var turted = new TURTED(sockjs_url);
+            //turted.ident(1,"Xosofox",12341234);
+            //turted.join("chat");
+
             turted.on("message", function(data) {
-                print("->",data.data);
+                console.log(data);
+                addLine("->",data.data);
             })
 
-            var sockjs;
 
             $('#first input').focus();
 
@@ -42,7 +45,7 @@
             var inp = $('#first input');
             var form = $('#first form');
 
-            var print = function (m, p) {
+            var addLine = function (m, p) {
                 p = (p === undefined) ? '' : JSON.stringify(p);
                 div.append($("<code>").text(m + ' ' + p));
                 div.append($("<br>"));
@@ -50,7 +53,7 @@
             };
 
             form.submit(function () {
-                print('[ ] sending', inp.val());
+                addLine('[ ] sending', inp.val());
                 turted.send(inp.val());
                 inp.val('');
                 return false;

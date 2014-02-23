@@ -6,7 +6,6 @@ var TURTED = function (sockjs_url) {
     this.reconnect = function () {
         var sockjs = new SockJS(sockjs_url);
         sockjs.onopen = function () {
-            print('[*] open', sockjs.protocol);
             this.send("Bin jetzt da: " + navigator.userAgent.replace(/\(.*?\)/g, ''));
         };
         sockjs.onmessage = function (e) {
@@ -33,9 +32,7 @@ var TURTED = function (sockjs_url) {
 
         }
         sockjs.onclose = function () {
-            print('[*] close');
             setTimeout(this.reconnect.bind(this),1000);
-            print('[-] retry');
         }.bind(this);;
 
         this.nativeConnection = sockjs;
@@ -50,6 +47,20 @@ TURTED.prototype.on = function (on, f) {
     }
     this.callbacks[on].push(f);
 };
+
+TURTED.prototype.ident = function(id, username, token) {
+    this.nativeConnection.send(this.encode("ident",{
+        id: id,
+        username: username,
+        token: token
+    }));
+}
+
+TURTED.prototype.join = function(channel) {
+    this.nativeConnection.send(this.encode("join",{
+        channel: channel
+    }));
+}
 
 TURTED.prototype.send = function (message) {
     this.nativeConnection.send(this.encode("message", message));
