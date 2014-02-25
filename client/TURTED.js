@@ -2,25 +2,27 @@ var TURTED = function (sockjs_url) {
     var me = this;
     this.callbacks = {};
     this.nativeConnection = {};
+    this.callbackQueue = [];
+    this.isConnected = false;
 
     this.reconnect = function () {
         var sockjs = new SockJS(sockjs_url);
         sockjs.onopen = function () {
-            this.send("Bin jetzt da: " + navigator.userAgent.replace(/\(.*?\)/g, ''));
-        };
+            //fire queued events here
+            me.isConnected = true;
+            me.processQueue();
+        }
         sockjs.onmessage = function (e) {
-            var type = "";
-            var data = {};
-            if (e.hasOwnProperty("type")) {
-                type = e.type;
-            }
+            console.log("Sock gives me ",e);
+            data = JSON.parse(e.data);
+            console.log("After parsing I have ",data);
+            var type = data.type;
+            var data = data.data;
 
-            if (e.hasOwnProperty("data")) {
-                data = JSON.parse(e.data);
-            }
-
+            console.log(type,data);
             if (typeof me.callbacks[type] === "object") {
                 var l = me.callbacks[type].length;
+                console.log("Triggering callbacks on ", type);
                 for (var i = 0; i < l; i++) {
                     me.callbacks[type][i].call(me, data);
                 }
@@ -29,11 +31,12 @@ var TURTED = function (sockjs_url) {
 
         sockjs.onerror = function (e) {
             console.log("Error", e)
-
         }
         sockjs.onclose = function () {
-            setTimeout(this.reconnect.bind(this),1000);
-        }.bind(this);;
+            this.isConnected = false;
+            setTimeout(this.reconnect.bind(this), 1000);
+        }.bind(this);
+        ;
 
         this.nativeConnection = sockjs;
     }
@@ -48,18 +51,34 @@ TURTED.prototype.on = function (on, f) {
     this.callbacks[on].push(f);
 };
 
-TURTED.prototype.ident = function(id, username, token) {
-    this.nativeConnection.send(this.encode("ident",{
-        id: id,
-        username: username,
-        token: token
-    }));
+TURTED.prototype.ident = function (id, username, token) {
+    //enqueue the "ident" action until connected
+    this.enqueue(function () {
+        this.nativeConnection.send(this.encode("ident", {
+            id: id,
+            username: username,
+            token: token
+        }));
+    }.bind(this));
+
+    //in case the call was made on an open connection, immediately process the queue again
+    if (this.isConnected) {
+        this.processQueue();
+    }
 }
 
-TURTED.prototype.join = function(channel) {
-    this.nativeConnection.send(this.encode("join",{
-        channel: channel
-    }));
+TURTED.prototype.join = function (channel) {
+    //enqueue the "join" action until connected
+    this.enqueue(function () {
+        this.nativeConnection.send(this.encode("join", {
+            channel: channel
+        }));
+    }.bind(this));
+
+    //in case the call was made on an open connection, immediately process the queue again
+    if (this.isConnected) {
+        this.processQueue();
+    }
 }
 
 TURTED.prototype.send = function (message) {
@@ -77,4 +96,21 @@ TURTED.prototype.encode = function (type, data) {
         data: data
     });
 }
+
+TURTED.prototype.enqueue = function (f) {
+    //store the call and arguments
+    this.callbackQueue.push(f);
+}
+
+TURTED.prototype.processQueue = function () {
+    var emergency = 100;
+    while ((this.callbackQueue.length > 0) && (emergency > 0)) {
+        var f = this.callbackQueue.shift();
+        if (typeof f === "function") {
+            f();
+        }
+        emergency--;
+    }
+}
+
 

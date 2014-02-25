@@ -83,10 +83,10 @@ RawData.prototype.create = function (type, data) {
 }
 
 RawData.prototype.toPlainObject = function () {
-    return {
+    return JSON.stringify({
         type: this.type,
         data: this.data
-    };
+    });
 }
 
 module.exports = RawData;
