@@ -13,13 +13,13 @@ var TURTED = function (sockjs_url) {
             me.processQueue();
         }
         sockjs.onmessage = function (e) {
-            console.log("Sock gives me ",e);
+            console.log("Sock gives me ", e);
             data = JSON.parse(e.data);
-            console.log("After parsing I have ",data);
+            console.log("After parsing I have ", data);
             var type = data.type;
             var data = data.data;
 
-            console.log(type,data);
+            console.log(type, data);
             if (typeof me.callbacks[type] === "object") {
                 var l = me.callbacks[type].length;
                 console.log("Triggering callbacks on ", type);

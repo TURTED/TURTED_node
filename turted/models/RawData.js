@@ -20,7 +20,7 @@ RawData.prototype.validate = function () {
         try {
             var o = JSON.parse(rd);
             if (typeof o === "object") {
-                rd=o;
+                rd = o;
             }
         } catch (ex) {
             //console.log(ex);
@@ -82,7 +82,7 @@ RawData.prototype.create = function (type, data) {
     return this;
 }
 
-RawData.prototype.encode = function() {
+RawData.prototype.encode = function () {
     return JSON.stringify(this.toPlainObject());
 }
 

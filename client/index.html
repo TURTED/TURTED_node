@@ -22,25 +22,25 @@
             sockjs_url = 'http://localhost/turted';
 
             var turted = new TURTED(sockjs_url);
-            turted.ident(1,"Xosofox",12341234);
+            turted.ident(1, "Xosofox", 12341234);
             turted.join("chat");
-            turted.on("welcome", function(data) {
+            turted.on("welcome", function (data) {
                 alert("I am welcome");
             })
 
-            turted.on("message", function(data) {
+            turted.on("message", function (data) {
                 console.log(data);
-                addLine("->",data);
+                addLine("->", data);
             })
 
 
             $('#first input').focus();
 
-            $('#echo').click(function() {
+            $('#echo').click(function () {
                 turted.echo("Hello, echo!!");
             })
 
-            $('#ok').click(function() {
+            $('#ok').click(function () {
                 turted.send("Hello");
             })
 

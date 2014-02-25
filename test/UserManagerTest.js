@@ -15,7 +15,7 @@ exports.handleIdentSendsNegativeResponseToConnection = function (test) {
 
     conn.send = function (data) {
         //usermanger needs to call send on connection
-        test.deepEqual(data, {type: "ERR", data: {ERR:"UNIDENTIFIED"}}, "UserManager sent negative response to connection");
+        test.deepEqual(data, {type: "ERR", data: {ERR: "UNIDENTIFIED"}}, "UserManager sent negative response to connection");
     }
 
     userMan.handleIdent(conn, {id: 123, username: "asdf", token: "9856099"});
