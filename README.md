@@ -62,9 +62,9 @@ For each of these connections, data needs to follow certain structures.
 
 #Connectors#
 ##Client to Server
-*sock.js
+* sock.js
 
 ##Backend to Server
-*ApeInlinePushConnector (for compatibility)
-*Redis Pub/Sub (close future plan)
-*RabbitMQ (far future plan)
+* ApeInlinePushConnector (for compatibility)
+* Redis Pub/Sub (close future plan)
+* RabbitMQ (far future plan)
