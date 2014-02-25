@@ -62,7 +62,7 @@ Connection.prototype.close = function () {
 }
 
 Connection.prototype.send = function (message) {
-    console.log("Sending a message ", message);
+    //console.log("Sending a message ", message);
     this.emit("send", message);
 }
 

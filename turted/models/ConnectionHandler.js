@@ -21,8 +21,8 @@ ConnectionHandler.prototype.addConnection = function (conn) {
 
     //simple echo test
     conn.on("RX:ECHO",function(conn, data) {
-        console.log("Got echo message ",data)
-        console.log("Sending back ")
+        //console.log("Got echo message ",data)
+        //console.log("Sending back ")
         conn.send(new RawData().create("message",data).encode());
     })
 }
