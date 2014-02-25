@@ -13,6 +13,7 @@ Collection.prototype.remove = function (key) {
 Collection.prototype.has = function(key) {
     return (key in this.items);
 }
+Collection.prototype.exists = Collection.prototype.has;
 
 Collection.prototype.length = function() {
     var l = 0;
@@ -22,6 +23,14 @@ Collection.prototype.length = function() {
         };
     }
     return l;
+}
+
+Collection.prototype.count = Collection.prototype.length;
+
+Collection.prototype.get = function(key) {
+    if (key in this.items) {
+        return this.items[key];
+    }
 }
 
 module.exports = Collection;

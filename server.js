@@ -10,7 +10,8 @@ var static_directory = new node_static.Server(__dirname + '/client');
 var server = http.createServer();
 
 //instanciate an authenticator for checking incoming identification requests
-var auth = new turted.TokenAuthenticator(config.authTokenPrefix, config.authTokenSuffix, config.authTokenHashType);
+//var auth = new turted.TokenAuthenticator(config.authTokenPrefix, config.authTokenSuffix, config.authTokenHashType);
+var auth = new turted.AlwaysAcceptAuthenticator();
 
 var connMan = new turted.ConnectionManager();
 var userMan = new turted.UserManager(auth);

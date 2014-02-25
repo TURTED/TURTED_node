@@ -15,9 +15,7 @@ ConnectionHandler.prototype.addConnection = function (conn) {
 
 
     //we'll see later how this will be taken care of...
-    conn.on("RX:MESSAGE", function(conn,data) {
-        this.message.call(this,conn,data);
-    }.bind(this));
+    conn.on("RX:MESSAGE", this.message.bind(this));
 
     //simple echo test
     conn.on("RX:ECHO",function(conn, data) {

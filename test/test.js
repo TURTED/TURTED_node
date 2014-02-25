@@ -8,11 +8,13 @@ var tests = [
     "MockSockTest",
     "TokenAuthenticatorTest",
     "ConnectionManagerTest",
+    "UserTest",
     "UserManagerTest",
+    "ChannelTest",
     "ChannelManagerTest",
 ];
 
-//tests = ["ConnectionHandlerTest"];
+//tests = ["ChannelManagerTest"];
 
 for (var i = 0; i<tests.length;i++) {
     var testName = tests[i];
