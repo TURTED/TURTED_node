@@ -24,7 +24,7 @@ UserManager.prototype.handleIdent = function (conn, data) {
             responseData = {};
         }
     }
-    var rd = new RawData().create(response, responseData).toPlainObject();
+    var rd = new RawData().create(response, responseData).encode();
     console.log(rd);
     conn.send(rd);
 }

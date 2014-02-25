@@ -23,7 +23,7 @@ ConnectionHandler.prototype.addConnection = function (conn) {
     conn.on("RX:ECHO",function(conn, data) {
         console.log("Got echo message ",data)
         console.log("Sending back ")
-        conn.send(new RawData().create("message",data).toPlainObject());
+        conn.send(new RawData().create("message",data).encode());
     })
 }
 
@@ -31,7 +31,7 @@ ConnectionHandler.prototype.addConnection = function (conn) {
 ConnectionHandler.prototype.message = function (conn, message) {
     //the client sent a message
     console.log("Here ConnectionHandler! ", conn.id, " sent ", message);
-    conn.send(new RawData().create("welcome").toPlainObject());
+    conn.send(new RawData().create("welcome").encode());
 }
 
 module.exports = ConnectionHandler;

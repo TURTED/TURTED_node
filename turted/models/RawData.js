@@ -82,11 +82,15 @@ RawData.prototype.create = function (type, data) {
     return this;
 }
 
+RawData.prototype.encode = function() {
+    return JSON.stringify(this.toPlainObject());
+}
+
 RawData.prototype.toPlainObject = function () {
-    return JSON.stringify({
+    return {
         type: this.type,
         data: this.data
-    });
+    };
 }
 
 module.exports = RawData;
