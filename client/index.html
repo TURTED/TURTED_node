@@ -1,67 +1,122 @@
 <!doctype html>
 <html>
-    <head>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
-        <link href="style.css" rel="stylesheet">
-        <script src="TURTED.js" type="text/javascript"></script>
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+    <link href="style.css" rel="stylesheet">
+    <script src="TURTED.js" type="text/javascript"></script>
 
-    </head>
-    <body lang="en">
-        <h1>TURTED example</h1>
+</head>
+<body lang="en">
 
-        <div id="first" class="box">
-            <div></div>
-            <form><input autocomplete="off" placeholder="Type here..." /></form>
-            <button id="ok">Say Hello</button>
-            <button id="echo">ECHO</button>
-        </div>
+<div style="float: left">
+    <h3>TURTED Client example</h3>
 
-        <script type="text/javascript">
+    <div id="first" class="box">
+        <div></div>
+        <form><input autocomplete="off" placeholder="Type here..."/></form>
+        <button id="ok">Say Hello</button>
+        <button id="echo">ECHO</button>
+    </div>
+</div>
 
-            sockjs_url = 'http://localhost/turted';
+<script type="text/javascript">
 
-            var turted = new TURTED(sockjs_url);
-            turted.ident(1, "Xosofox", 12341234);
-            turted.join("chat");
-            turted.on("welcome", function (data) {
-                alert("I am welcome");
-            })
+    sockjs_url = 'http://localhost/turted';
 
-            turted.on("message", function (data) {
-                console.log(data);
-                addLine("->", data);
-            })
+    var turted = new TURTED(sockjs_url);
+    turted.ident(1, "Xosofox", 12341234);
+    turted.join("chat");
+    turted.on("welcome", function (data) {
+        alert("I am welcome");
+    })
+
+    turted.on("message", function (data) {
+        console.log(data);
+        addLine("->", data);
+    })
 
 
-            $('#first input').focus();
+    $('#first input').focus();
 
-            $('#echo').click(function () {
-                turted.echo("Hello, echo!!");
-            })
+    $('#echo').click(function () {
+        turted.echo("Hello, echo!!");
+    })
 
-            $('#ok').click(function () {
-                turted.send("Hello");
-            })
+    $('#ok').click(function () {
+        turted.send("Hello");
+    })
 
-            var div = $('#first div');
-            var inp = $('#first input');
-            var form = $('#first form');
+    var div = $('#first div');
+    var inp = $('#first input');
+    var form = $('#first form');
 
-            var addLine = function (m, p) {
-                p = (p === undefined) ? '' : JSON.stringify(p);
-                div.append($("<code>").text(m + ' ' + p));
-                div.append($("<br>"));
-                div.scrollTop(div.scrollTop() + 10000);
-            };
+    var addLine = function (m, p) {
+        p = (p === undefined) ? '' : JSON.stringify(p);
+        div.append($("<code>").text(m + ' ' + p));
+        div.append($("<br>"));
+        div.scrollTop(div.scrollTop() + 10000);
+    };
 
-            form.submit(function () {
-                addLine('[ ] sending', inp.val());
-                turted.send(inp.val());
-                inp.val('');
-                return false;
-            });
+    form.submit(function () {
+        addLine('[ ] sending', inp.val());
+        turted.send(inp.val());
+        inp.val('');
+        return false;
+    });
 
-        </script>
-    </body>
+</script>
+
+<div style="float: right">
+    <h3>TURTED Server Push example</h3>
+    APE style
+    <form id="apeinlinepush" action="?#">
+        Cmd: <select name="pushcmd" id="pushcmd">
+        <option value="notifyChannel">notifyChannel</option>
+        <option value="notifyUser">notifyUser</option>
+    </select><br/>
+        Event: <input type="text" id="event" placeholder="event type" value="message"><br>
+        Target: <input type="text" id="target" placeholder="user or channel" value="xosofox"><br/>
+        Passwd: <input type="text" id="pushpasswd" value="IamAllowed2PUSH!!!"><br/>
+        Payload <br/>
+        <textarea name="payload" id="payload" cols="30" rows="10"></textarea><br/>
+
+        <div id="pushUrl" style="overflow: scroll">asdfasdfasdf-</div>
+        <br/>
+        <input type="button" value="Push">
+    </form>
+</div>
+
+<script type="text/javascript">
+    function rebuildApeCmd() {
+        var pushcmd = $('#pushcmd').val();
+        var password = $('#pushpasswd').val();
+        var event = $('#event').val();
+        var targetlist = $('#target').val();
+        var data = $('#payload').val();
+
+        return [{
+            "cmd": pushcmd,
+            "params": {
+                "password": password,
+                "event": event,
+                "channel": targetlist,
+                "data": data
+            }
+        }];
+    }
+
+    function apeEncode(cmd) {
+        return encodeURIComponent(JSON.stringify(cmd));
+    }
+
+    $('#apeinlinepush').on("keyup", ":input", function () {
+        var apecmd = rebuildApeCmd();
+        console.log(apecmd);
+        $('#pushUrl').text(apeEncode(apecmd));
+    })
+
+</script>
+
+</body>
 </html>
