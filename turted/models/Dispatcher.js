@@ -8,6 +8,7 @@ var Dispatcher = function (connMan) {
 Dispatcher.prototype.dispatch = function (dispatch) {
     console.log("Now I'm dispatchin it!");
     console.log(dispatch);
+    return true;
 };
 
 Dispatcher.prototype.dispatchEventDataTarget = function (e,data,targets) {

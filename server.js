@@ -29,7 +29,7 @@ var pusher = new turted.ApeInlinePushConnector(dispatcher, pushPrefix, pushAuthT
 
 server.addListener('request', function (req, res) {
     if (pushRegExp.test(req.url)) {
-        pusher.push(req);
+        pusher.push(req,res);
     } else {
         static_directory.serve(req, res);
     }

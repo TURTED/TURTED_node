@@ -72,18 +72,19 @@
     APE style
     <form id="apeinlinepush" action="?#">
         Cmd: <select name="pushcmd" id="pushcmd">
-        <option value="notifyChannel">notifyChannel</option>
         <option value="notifyUser">notifyUser</option>
+        <option value="notifyChannel">notifyChannel</option>
     </select><br/>
         Event: <input type="text" id="event" placeholder="event type" value="message"><br>
         Target: <input type="text" id="target" placeholder="user or channel" value="xosofox"><br/>
         Passwd: <input type="text" id="pushpasswd" value="IamAllowed2PUSH!!!"><br/>
         Payload <br/>
-        <textarea name="payload" id="payload" cols="30" rows="10"></textarea><br/>
+        <input type="text" id="payload" value="Data to deliver"><br/>
 
-        <div id="pushUrl" style="overflow: scroll">asdfasdfasdf-</div>
+        <input type="text" id="baseUrl" value="http://localhost/push/?" name="baseUrl" />
+        <input type="text" id="pushUrl" style="width: 300px; font-size: 8pt" value="-">
         <br/>
-        <input type="button" value="Push">
+        <input type="button" value="Push" id="pushit">
     </form>
 </div>
 
@@ -106,14 +107,28 @@
         }];
     }
 
+    function rebuildAll() {
+        var apecmd = rebuildApeCmd();
+        var baseUrl = $('#baseUrl').val();
+        //console.log(apecmd);
+        $('#pushUrl').val(baseUrl + apeEncode(apecmd));
+    }
+
     function apeEncode(cmd) {
         return encodeURIComponent(JSON.stringify(cmd));
     }
 
-    $('#apeinlinepush').on("keyup", ":input", function () {
-        var apecmd = rebuildApeCmd();
-        console.log(apecmd);
-        $('#pushUrl').text(apeEncode(apecmd));
+    $('#apeinlinepush').on("keyup change", "input,select", rebuildAll);
+    $('#pushit').on("click",function() {
+        rebuildAll();
+        var url =$('#pushUrl').val();
+        console.log(url);
+        $.get(url,function(a,b,c,d) {
+            console.log(a);
+            console.log(b);
+            console.log(c);
+            console.log(d);
+        });
     })
 
 </script>
