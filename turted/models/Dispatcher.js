@@ -6,6 +6,8 @@ var Dispatcher = function (connMan) {
 }
 
 Dispatcher.prototype.dispatch = function (dispatch) {
+    console.log("Now I'm resolving it!");
+    //this.ConnectionManager.resolve(dispatch);
     console.log("Now I'm dispatchin it!");
     console.log(dispatch);
     return true;
