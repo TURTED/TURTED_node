@@ -20,3 +20,18 @@ exports.connManRegistersConnections = function (test) {
     test.done();
 }
 
+exports.connManReturnsAllConnections= function (test) {
+    test.expect(2);
+    var conn1 = new Connection({});
+    var conn2 = new Connection({});
+    var connManager = new ConnectionManager();
+    connManager.addConnection(conn1);
+    connManager.addConnection(conn2);
+
+    test.equal((conn1.id in connManager.getConnections()),true,"Conn1 got registered");
+    conn1.close();
+    test.equal((conn1.id in connManager.getConnections()),false,"Conn1 got unregistered");
+
+    test.done();
+}
+

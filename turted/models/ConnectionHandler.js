@@ -13,7 +13,6 @@ ConnectionHandler.prototype.addConnection = function (conn) {
     this.userManager.addConnection(conn);
     this.channelManager.addConnection(conn);
 
-
     //we'll see later how this will be taken care of...
     conn.on("RX:MESSAGE", this.message.bind(this));
 

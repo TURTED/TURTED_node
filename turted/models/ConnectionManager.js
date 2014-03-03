@@ -12,4 +12,8 @@ ConnectionManager.prototype.addConnection = function(conn) {
     }.bind(this));
 }
 
+ConnectionManager.prototype.getConnections = function() {
+    return this.connections.getItems();
+}
+
 module.exports = ConnectionManager;

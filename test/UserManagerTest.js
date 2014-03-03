@@ -1,9 +1,17 @@
 var Connection = require('../turted/models/Connection')
 var UserManager = require('../turted/models/UserManager');
 
+function objLen (obj) {
+    var i=0;
+    for (var k in obj) {
+        i++;
+    }
+    return i;
+}
+
 exports.handleIdentSendsNegativeResponseToConnection = function (test) {
     test.expect(1);
-    var conn = {};
+    var conn = new Connection({});
 
     //mock an authenticator that always denies
     var auth = {};
@@ -24,7 +32,7 @@ exports.handleIdentSendsNegativeResponseToConnection = function (test) {
 
 exports.handleIdentSendsPositiveResponseToConnection = function (test) {
     test.expect(1);
-    var conn = {};
+    var conn = new Connection({});
 
     //mock an authenticator that always accepts
     var auth = {};
@@ -43,3 +51,31 @@ exports.handleIdentSendsPositiveResponseToConnection = function (test) {
     userMan.handleIdent(conn, {id: 123, username: "asdf", token: "9856099"});
 };
 
+exports.returnsAllUsersConnections = function(test) {
+    test.expect(6);
+
+    //mock an authenticator that always accepts
+    var auth = {};
+    auth.verify = function () {
+        return true;
+    }
+
+    var userMan = new UserManager(auth);
+    var conn1 = new Connection({});
+    var conn2 = new Connection({});
+    var conn3 = new Connection({});
+    userMan.handleIdent(conn1, {id: 123, username: "asdf", token: "9856099"});
+    userMan.handleIdent(conn2, {id: 12, username: "asdf", token: "985099"});
+    userMan.handleIdent(conn3, {id: 1, username: "qwer", token: "98599"});
+
+    test.equal(objLen(userMan.getUserConnections("asdf")),2,"Returns 2 for asdf");
+    test.equal(objLen(userMan.getUserConnections("qwer")),1,"Returns 1 for qwer");
+    test.deepEqual(userMan.getUserConnections("none"),{},"Returns 0 for non-existant");
+    conn3.close();
+    test.deepEqual(userMan.users.has("qwer"),false,"User is unregistered if his last connection left");
+    test.deepEqual(userMan.getUserConnections("qwer"),{},"Returns 0 if user conn left");
+    conn1.close();
+    test.equal(objLen(userMan.getUserConnections("asdf")),1,"Returns 1 after second left");
+
+    test.done();
+}
