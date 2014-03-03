@@ -2,7 +2,7 @@ var events = require('events');
 var util = require('util');
 var Collection = require('./Collection');
 
-var Channel = function(name) {
+var Channel = function (name) {
     this.name = name;
     this.connections = new Collection();
     events.EventEmitter.call(this);
@@ -10,16 +10,20 @@ var Channel = function(name) {
 
 util.inherits(Channel, events.EventEmitter);
 
-Channel.prototype.join = function(conn) {
+Channel.prototype.join = function (conn) {
     this.connections.add(conn.id, conn);
-    conn.on("close",this.leave.bind(this))
+    conn.on("close", this.leave.bind(this))
 }
 
-Channel.prototype.leave = function(conn) {
+Channel.prototype.leave = function (conn) {
     this.connections.remove(conn.id);
-    if (this.connections.length()===0) {
-        this.emit("empty",this);
+    if (this.connections.length() === 0) {
+        this.emit("empty", this);
     }
+}
+
+Channel.prototype.getConnections = function () {
+    return this.connections.getItems();
 }
 
 module.exports = Channel;

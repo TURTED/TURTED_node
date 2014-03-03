@@ -2,6 +2,14 @@ var RawData = require('../turted/models/RawData');
 var Connection = require('../turted/models/Connection');
 var ChannelManager = require('../turted/models/ChannelManager');
 
+function objLen (obj) {
+    var i=0;
+    for (var k in obj) {
+        i++;
+    }
+    return i;
+}
+
 exports.chanManRegistersConnections = function (test) {
     test.expect(10);
     var conn1 = new Connection({});
@@ -40,5 +48,25 @@ exports.chanManRegistersConnections = function (test) {
     test.equal(chanManager.channels.count(),0,"Chanman closed all channels after all connections left");
     //connMan.removeConnection(conn2);
 
+    test.done();
+}
+
+exports.chanManReturnsConnections = function (test) {
+    test.expect(2);
+    var conn1 = new Connection({});
+    var conn2 = new Connection({});
+    var conn3 = new Connection({});
+    var chanManager = new ChannelManager();
+
+    chanManager.handleJoin(conn1, {channel: "test1"});
+    chanManager.handleJoin(conn2, {channel: "test1"});
+    chanManager.handleJoin(conn3, {channel: "test1"});
+    chanManager.handleJoin(conn1, {channel: "test1"});
+    chanManager.handleJoin(conn1, {channel: "test1"});
+    chanManager.handleJoin(conn1, {channel: "test2"});
+    chanManager.handleJoin(conn1, {channel: "test3"});
+
+    test.equal(objLen(chanManager.getChannelConnections("test1")),3); //,"Returns the 3 conns on channel test1")
+    test.equal((conn1.id in chanManager.getChannelConnections("test3")),true,"Returns conn1 as part of channel test3")
     test.done();
 }

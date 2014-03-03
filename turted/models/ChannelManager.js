@@ -56,7 +56,11 @@ ChannelManager.prototype.handleLeave = function(conn, data) {
 }
 
 ChannelManager.prototype.getChannelConnections = function (channel) {
-    return {};
+    if (this.channels.has(channel)) {
+        return this.channels.get(channel).getConnections();
+    } else {
+        return {};
+    }
 }
 
 module.exports = ChannelManager;

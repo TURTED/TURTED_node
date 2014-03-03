@@ -31,4 +31,10 @@ ConnectionHandler.prototype.message = function (conn, message) {
     conn.send(new RawData().create("welcome").encode());
 }
 
+ConnectionHandler.prototype.resolve = function (dispatch) {
+    //check for broadcast
+    //check for channels
+    //check for users
+}
+
 module.exports = ConnectionHandler;

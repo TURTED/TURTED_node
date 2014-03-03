@@ -1,13 +1,18 @@
 var Dispatch = require('./Dispatch');
 
-var Dispatcher = function (connMan) {
-    this.ConnectionManager = connMan;
+var Dispatcher = function (connHandler) {
+    this.ConnectionHandler = connHandler;
     console.log("Dispatcher created");
 }
 
+/**
+ * Takes a dispatch paket, resolves all recipients and forwards it for delivery
+ * @param dispatch
+ * @returns {boolean}
+ */
 Dispatcher.prototype.dispatch = function (dispatch) {
     console.log("Now I'm resolving it!");
-    //this.ConnectionManager.resolve(dispatch);
+    this.ConnectionHandler.resolve(dispatch);
     console.log("Now I'm dispatchin it!");
     console.log(dispatch);
     return true;
