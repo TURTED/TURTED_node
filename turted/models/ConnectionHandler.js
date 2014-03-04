@@ -1,3 +1,4 @@
+var _ = require("lodash-node");
 var RawData = require('./RawData');
 
 var ConnectionHandler = function (connMan, userMan, chanMan) {
@@ -33,8 +34,22 @@ ConnectionHandler.prototype.message = function (conn, message) {
 
 ConnectionHandler.prototype.resolve = function (dispatch) {
     //check for broadcast
-    //check for channels
+    if (dispatch.isBroadcast()) {
+        dispatch.addTargetConnections(this.connectionManager.getConnections());
+        return true;
+    }
+
     //check for users
+    _.each(dispatch.getTargetUsers(),function(username) {
+        //console.log("resolving user",username);
+        dispatch.addTargetConnections(this.userManager.getUserConnections(username));
+    }.bind(this));
+
+    //check for channels
+    _.each(dispatch.getTargetChannels(),function(channel) {
+        //console.log("resolving channel",channel);
+        dispatch.addTargetConnections(this.channelManager.getChannelConnections(channel));
+    }.bind(this))
 }
 
 module.exports = ConnectionHandler;

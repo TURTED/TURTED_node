@@ -3,7 +3,6 @@
 var tests = [
     //"example",
     "ConnectionTest",
-    "ConnectionHandlerTest",
     "RawDataTest",
     "MockSockTest",
     "TokenAuthenticatorTest",
@@ -12,6 +11,8 @@ var tests = [
     "UserManagerTest",
     "ChannelTest",
     "ChannelManagerTest",
+    "DispatchTest",
+    "ConnectionHandlerTest",
 ];
 
 //tests = ["ChannelManagerTest"];

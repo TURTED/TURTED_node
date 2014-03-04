@@ -64,9 +64,9 @@ exports.returnsAllUsersConnections = function(test) {
     var conn1 = new Connection({});
     var conn2 = new Connection({});
     var conn3 = new Connection({});
-    userMan.handleIdent(conn1, {id: 123, username: "asdf", token: "9856099"});
+    userMan.handleIdent(conn1, {id: 12, username: "asdf", token: "9856099"});
     userMan.handleIdent(conn2, {id: 12, username: "asdf", token: "985099"});
-    userMan.handleIdent(conn3, {id: 1, username: "qwer", token: "98599"});
+    userMan.handleIdent(conn3, {id: 13, username: "qwer", token: "98599"});
 
     test.equal(objLen(userMan.getUserConnections("asdf")),2,"Returns 2 for asdf");
     test.equal(objLen(userMan.getUserConnections("qwer")),1,"Returns 1 for qwer");
