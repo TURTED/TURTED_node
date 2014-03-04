@@ -38,8 +38,9 @@ ApeInlinePushConnector.prototype.push = function (req, res) {
 
         var cmd = cmdData.cmd || "";
         var password = cmdData.params.password || "";
-        var event = cmdData.params.raw || "";
+        var event = cmdData.params.event || "";
         var channel = cmdData.params.channel || "";
+        var user = cmdData.params.user || "";
         var data = cmdData.params.data || {};
 
         //check password here
@@ -48,17 +49,25 @@ ApeInlinePushConnector.prototype.push = function (req, res) {
             return this.fail(req, res, 401, "Wrong password");
         }
 
-        console.log(cmd, password, event, channel, data);
+        console.log(cmd, password, event, "CHANNEL", channel, "USER", user, data);
         //create dispatch
+        var targets = {};
         if (cmd === "notifyChannel") {
-            var targets = {
-                channels: channel
+            targets = {
+                channels: [channel]
             }
-
-            this.dispatcher.dispatchEventDataTarget(event, data, targets);
+        } else if (cmd === "notifyUser") {
+            targets = {
+                users: [user]
+            }
+        } else if (cmd === "notifyAll") {
+            targets = {
+                broadcast: true
+            };
         }
+        this.dispatcher.dispatchEventDataTarget(event, data, targets);
     }
-    this.success(req,res,200,"OK");
+    this.success(req, res, 200, "OK");
 
 }
 ApeInlinePushConnector.prototype.success = function (req, res, code, message) {

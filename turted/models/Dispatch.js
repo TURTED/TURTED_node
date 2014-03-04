@@ -8,14 +8,13 @@ var Collection = require('./Collection');
  * @param targets
  * @constructor
  */
-var Dispatch = function (e, payload, targets) {
+var Dispatch = function (event, payload, targets) {
     this._connections = new Collection();
+    this._event = event
     this._payload = payload;
     this._targets = targets;
-    //console.log("This event " + e + " goes to:");
-    //console.log(targets);
-    //console.log("Its payload: ");
-    //console.log(payload);
+    console.log("This event " + event + " goes to:",targets);
+    console.log("Its payload: ",payload);
 };
 
 Dispatch.prototype.isBroadcast = function () {

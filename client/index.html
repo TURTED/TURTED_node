@@ -25,7 +25,7 @@
     sockjs_url = 'http://localhost/turted';
 
     var turted = new TURTED(sockjs_url);
-    turted.ident(1, "Xosofox", 12341234);
+    turted.ident(1, "xosofox", 12341234);
     turted.join("chat");
     turted.on("welcome", function (data) {
         alert("I am welcome");
@@ -74,6 +74,7 @@
         Cmd: <select name="pushcmd" id="pushcmd">
         <option value="notifyUser">notifyUser</option>
         <option value="notifyChannel">notifyChannel</option>
+        <option value="notifyAll">notifyAll</option>
     </select><br/>
         Event: <input type="text" id="event" placeholder="event type" value="message"><br>
         Target: <input type="text" id="target" placeholder="user or channel" value="xosofox"><br/>
@@ -102,6 +103,7 @@
                 "password": password,
                 "event": event,
                 "channel": targetlist,
+                "user": targetlist,
                 "data": data
             }
         }];

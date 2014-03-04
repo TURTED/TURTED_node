@@ -19,7 +19,7 @@ var chanMan = new turted.ChannelManager();
 
 //instanciate a central connection handler, Dispatcher and a SockJs connector
 var connHandler = new turted.ConnectionHandler(connMan, userMan, chanMan);
-var dispatcher = new turted.Dispatcher(connMan);
+var dispatcher = new turted.Dispatcher(connHandler);
 
 //init push connector
 var pushPrefix = "/push/?";
