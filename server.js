@@ -45,8 +45,3 @@ var sockjsClientConnector = new turted.SockJsClientConnector(server, connHandler
 console.log(' [*] Listening on 0.0.0.0:' + port);
 server.listen(port, '0.0.0.0');
 
-//var dispatcher = new YARTED.Dispatcher();
-//var dispatch = new YARTED.Dispatch("DISPATCH:DONE",{test:true},{channels: ["chat","log","moves"]});
-
-//console.log(dispatch);
-//dispatcher.dispatch(dispatch);
