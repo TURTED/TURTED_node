@@ -13,8 +13,8 @@ var Dispatch = function (event, payload, targets) {
     this._event = event
     this._payload = payload;
     this._targets = targets;
-    console.log("This event " + event + " goes to:",targets);
-    console.log("Its payload: ",payload);
+    //console.log("This event " + event + " goes to:",targets);
+    //console.log("Its payload: ",payload);
 };
 
 Dispatch.prototype.isBroadcast = function () {

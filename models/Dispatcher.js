@@ -3,7 +3,7 @@ var Dispatch = require('./Dispatch');
 
 var Dispatcher = function (connHandler) {
     this.ConnectionHandler = connHandler;
-    console.log("Dispatcher created");
+    //console.log("Dispatcher created");
 }
 
 /**
@@ -12,13 +12,13 @@ var Dispatcher = function (connHandler) {
  * @returns {boolean}
  */
 Dispatcher.prototype.dispatch = function (dispatch) {
-    console.log("Now I'm resolving it!");
+    //console.log("Now I'm resolving it!");
     this.ConnectionHandler.resolve(dispatch);
 
-    console.log("Now creating raw data");
+    //console.log("Now creating raw data");
     var rd = new RawData().create(dispatch._event,dispatch._payload).encode();
 
-    console.log("Now I'm dispatchin it!");
+    //console.log("Now I'm dispatchin it!");
     var targetConnections = dispatch.getTargetConnections();
     for (connId in targetConnections) {
         var conn = targetConnections[connId];
