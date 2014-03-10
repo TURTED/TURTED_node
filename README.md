@@ -28,7 +28,7 @@ turted.on("MESSAGE:NEW", function(data) {
 Heavily inspired by the work of the http://ape-project.org and based on my implementations back in 2011 on this topic
 (see http://de.slideshare.net/Xosofox/real-time-event-dispatcher)
 
-![Data overview](flow.png)
+![Data overview](docs/flow.png)
 
 Why?
 ----
