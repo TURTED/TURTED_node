@@ -1,5 +1,5 @@
-var Connection = require('../turted/models/Connection');
-var User = require('../turted/models/User');
+var Connection = require('../models/Connection');
+var User = require('../models/User');
 
 exports.userRegistersConnections = function (test) {
     test.expect(8);

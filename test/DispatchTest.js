@@ -1,4 +1,4 @@
-var Dispatch = require('../turted/models/Dispatch');
+var Dispatch = require('../models/Dispatch');
 
 exports.dispatchBroadcast = function (test) {
     test.expect(9);

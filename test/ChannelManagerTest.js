@@ -1,6 +1,6 @@
-var RawData = require('../turted/models/RawData');
-var Connection = require('../turted/models/Connection');
-var ChannelManager = require('../turted/models/ChannelManager');
+var RawData = require('../models/RawData');
+var Connection = require('../models/Connection');
+var ChannelManager = require('../models/ChannelManager');
 
 function objLen (obj) {
     var i=0;

@@ -1,9 +1,9 @@
-var Connection = require('../turted/models/Connection');
-var ConnectionHandler = require('../turted/models/ConnectionHandler');
-var ConnectionManager = require('../turted/models/ConnectionManager');
-var UserManager = require('../turted/models/UserManager');
-var ChannelManager = require('../turted/models/ChannelManager');
-var Dispatch = require('../turted/models/Dispatch');
+var Connection = require('../models/Connection');
+var ConnectionHandler = require('../models/ConnectionHandler');
+var ConnectionManager = require('../models/ConnectionManager');
+var UserManager = require('../models/UserManager');
+var ChannelManager = require('../models/ChannelManager');
+var Dispatch = require('../models/Dispatch');
 
 
 exports.resolve = function (test) {

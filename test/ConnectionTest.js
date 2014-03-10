@@ -1,4 +1,4 @@
-var Connection = require('../turted/models/Connection');
+var Connection = require('../models/Connection');
 var MockSock = require('./mock/MockSock');
 
 exports.connectionHasId = function (test) {

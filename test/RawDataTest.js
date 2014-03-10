@@ -1,4 +1,4 @@
-var RawData = require('../turted/models/RawData')
+var RawData = require('../models/RawData')
 
 exports.rawDataValidation = function (test) {
     test.expect(5);

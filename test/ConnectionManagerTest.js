@@ -1,6 +1,6 @@
-var RawData = require('../turted/models/RawData');
-var Connection = require('../turted/models/Connection');
-var ConnectionManager = require('../turted/models/ConnectionManager');
+var RawData = require('../models/RawData');
+var Connection = require('../models/Connection');
+var ConnectionManager = require('../models/ConnectionManager');
 
 exports.connManRegistersConnections = function (test) {
     test.expect(3);

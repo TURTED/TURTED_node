@@ -1,4 +1,4 @@
-var TokenAuthenticator = require('../turted/auth/TokenAuthenticator');
+var TokenAuthenticator = require('../auth/TokenAuthenticator');
 
 exports.createsCorrectMd5 = function (test) {
     test.expect(1);

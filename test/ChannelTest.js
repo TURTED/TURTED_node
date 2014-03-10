@@ -1,5 +1,5 @@
-var Connection = require('../turted/models/Connection');
-var Channel = require('../turted/models/Channel');
+var Connection = require('../models/Connection');
+var Channel = require('../models/Channel');
 
 exports.channelRegistersConnections = function (test) {
     test.expect(8);

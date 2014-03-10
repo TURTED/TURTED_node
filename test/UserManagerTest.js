@@ -1,5 +1,5 @@
-var Connection = require('../turted/models/Connection')
-var UserManager = require('../turted/models/UserManager');
+var Connection = require('../models/Connection')
+var UserManager = require('../models/UserManager');
 
 function objLen (obj) {
     var i=0;
