@@ -1,12 +1,10 @@
 var port = 80;
 var http = require('http');
-var node_static = require('node-static');
-var turted = require('./turted/turted.js');
 
-var config = require('./turted/config.js');
+var turted = require('turted');
+var config = require('config.js');
 
 //some basic url handling
-var static_directory = new node_static.Server(__dirname + '/client');
 var server = http.createServer();
 
 //instanciate an authenticator for checking incoming identification requests
@@ -31,7 +29,7 @@ server.addListener('request', function (req, res) {
     if (pushRegExp.test(req.url)) {
         pusher.push(req,res);
     } else {
-        static_directory.serve(req, res);
+        res.end()
     }
 });
 

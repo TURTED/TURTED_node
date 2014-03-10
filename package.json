@@ -1,14 +1,16 @@
 {
     "name": "TURTED",
-    "version": "0.0.0-unreleasable",
+    "version": "0.0.1",
     "dependencies": {
-        "node-static": "0.5.9",
         "sockjs": "*",
-        "lodash-node": "*",
+        "lodash-node": "*"
+    },
+    "devDependencies": {
         "nodeunit": "*"
     },
     "description": "The Universal Real Time Event Dispatcher",
-    "main": "server.js",
+    "homepage": "http://turted.xosofox.de",
+    "main": "index.js",
     "directories": {
         "test": "test"
     },
@@ -21,5 +23,9 @@
         "dispatcher"
     ],
     "author": "Peter Dietrich",
-    "license": "ISC"
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/TURTED/TURTED_node.git"
+    }
 }
