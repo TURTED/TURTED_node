@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var Collection = require('./Collection');
 
 /**
@@ -13,8 +14,8 @@ var Dispatch = function (event, payload, targets) {
     this._event = event
     this._payload = payload;
     this._targets = targets;
-    //console.log("This event " + event + " goes to:",targets);
-    //console.log("Its payload: ",payload);
+    logger.debug("This event " + event + " goes to:",targets);
+    logger.debug("Its payload: ",payload);
 };
 
 Dispatch.prototype.isBroadcast = function () {

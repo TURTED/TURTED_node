@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var events = require('events');
 var util = require('util');
 var RawData = require('./RawData');
@@ -10,7 +11,7 @@ var RawData = require('./RawData');
  */
 
 var Connection = function (nativeConnection) {
-    //console.log("New connection");
+    logger.debug("New connection");
     if (typeof nativeConnection === "undefined") {
         throw "NO_NATIVE_CONNECTION";
     }
@@ -30,7 +31,7 @@ var Connection = function (nativeConnection) {
             return p + (Math.random() * 1e18).toString(36)
         }, '');
     }
-    //console.log(this.id);
+    logger.debug(this.id);
     events.EventEmitter.call(this);
 }
 
@@ -38,7 +39,7 @@ util.inherits(Connection, events.EventEmitter);
 //Connection.prototype.__proto__ = events.EventEmitter.prototype;
 
 Connection.prototype.receive = function (message) {
-    //console.log("Abstracted connection got a message", message);
+    logger.debug("Abstracted connection got a message", message);
 
     //decode incoming message
     var rd = new RawData(message);
@@ -57,12 +58,12 @@ Connection.prototype.receive = function (message) {
 }
 
 Connection.prototype.close = function () {
-    //console.log("Abstract connection close");
+    logger.debug("Abstract connection close");
     this.emit("close",this);
 }
 
 Connection.prototype.send = function (message) {
-    //console.log("Sending a message ", message);
+    logger.debug("Sending a message ", message);
     this.emit("send", message);
 }
 

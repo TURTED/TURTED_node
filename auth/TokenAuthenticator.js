@@ -1,3 +1,4 @@
+var logger = require("../models/logger");
 var crypto = require("crypto");
 
 var TokenAuthenticator = function(prefix, suffix, hashType) {
@@ -13,12 +14,12 @@ var TokenAuthenticator = function(prefix, suffix, hashType) {
     }
 
     if (prefix+suffix === "") {
-        console.log("---- CRITICAL ---- no prefix and suffix set for token auth!!!!");
+        logger.warn("---- CRITICAL ---- no prefix and suffix set for token auth!!!!");
     }
 
     var knownAlgorithms = ['sha1', 'md5', 'sha256', 'sha512'];
     if (knownAlgorithms.indexOf(hashType)<0) {
-        console.log("We are using nodes own crypto library, and " + hashType + " is not a known type - so we fall back to md5");
+        logger.warn("We are using nodes own crypto library, and " + hashType + " is not a known type - so we fall back to md5");
         hashType="md5";
     }
 

@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var util = require('util');
 var Collection = require('./Collection');
 

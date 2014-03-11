@@ -1,8 +1,9 @@
+var logger = require("./logger");
 var Connection = require('../models/Connection');
 var sockjs = require('sockjs');
 
 var SockJsClientConnector = function (server, connHandler) {
-    console.log("Init sock.js server")
+    logger.debug("Init sock.js server")
     this.connHandler = connHandler;
 
     // all specifics for the socks.js connection go in here
@@ -14,7 +15,7 @@ var SockJsClientConnector = function (server, connHandler) {
 
         //bind to "send" event of transparent connection and translate to native
         conn.on("send", function () {
-            //console.log("Send data to native conn")
+            logger.debug("Send data to native conn")
             nativeConnection.write.apply(nativeConnection, arguments);
         });
 

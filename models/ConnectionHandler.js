@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var _ = require("lodash-node");
 var RawData = require('./RawData');
 
@@ -19,8 +20,8 @@ ConnectionHandler.prototype.addConnection = function (conn) {
 
     //simple echo test
     conn.on("RX:ECHO",function(conn, data) {
-        //console.log("Got echo message ",data)
-        //console.log("Sending back ")
+        logger.debug("Got echo message ",data)
+        logger.debug("Sending back ")
         conn.send(new RawData().create("message",data).encode());
     })
 }
@@ -28,7 +29,7 @@ ConnectionHandler.prototype.addConnection = function (conn) {
 //protocol event handling functions
 ConnectionHandler.prototype.message = function (conn, message) {
     //the client sent a message
-    console.log("Here ConnectionHandler! ", conn.id, " sent ", message);
+    logger.debug("Here ConnectionHandler! ", conn.id, " sent ", message);
     conn.send(new RawData().create("welcome").encode());
 }
 
@@ -41,13 +42,13 @@ ConnectionHandler.prototype.resolve = function (dispatch) {
 
     //check for users
     _.each(dispatch.getTargetUsers(),function(username) {
-        //console.log("resolving user",username);
+        logger.debug("resolving user",username);
         dispatch.addTargetConnections(this.userManager.getUserConnections(username));
     }.bind(this));
 
     //check for channels
     _.each(dispatch.getTargetChannels(),function(channel) {
-        //console.log("resolving channel",channel);
+        logger.debug("resolving channel",channel);
         dispatch.addTargetConnections(this.channelManager.getChannelConnections(channel));
     }.bind(this))
 }

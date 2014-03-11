@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var RawData = require('./RawData');
 var Collection = require('./Collection');
 
@@ -26,7 +27,7 @@ UserManager.prototype.handleIdent = function (conn, data) {
     }
     this.addUserConnection(data.username,conn);
     var rd = new RawData().create(response, responseData).encode();
-    //console.log(rd);
+    logger.debug(rd);
     conn.send(rd);
 }
 

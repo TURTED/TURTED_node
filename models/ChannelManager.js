@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var Channel = require('./Channel');
 var Collection = require('./Collection');
 
@@ -35,7 +36,7 @@ ChannelManager.prototype.handleJoin = function(conn, data) {
 
         channel.on("empty", function() {
             this.channels.remove(channelName);
-            //console.log("Channel ", channelName, " is empty");
+            logger.info("Channel ", channelName, " is empty");
             channel=undefined;
         }.bind(this));
     }

@@ -1,3 +1,4 @@
+var logger = require("./logger");
 var RawData = function (rawData) {
     this.valid = false;
     this.type = "";
@@ -10,7 +11,7 @@ RawData.prototype.validate = function () {
     this.valid = false;
     var rd = this.rawData;
 
-    //console.log("Verify ", this.rawData);
+    logger.debug("Verify ", this.rawData);
     if (typeof rd === "undefined") {
         this.reject("Raw data undefined");
         return false;
@@ -23,7 +24,7 @@ RawData.prototype.validate = function () {
                 rd = o;
             }
         } catch (ex) {
-            //console.log(ex);
+            logger.error(ex);
         }
     }
 
@@ -50,7 +51,7 @@ RawData.prototype.validate = function () {
 }
 
 RawData.prototype.reject = function (errMsg) {
-    //console.log("ERROR ", errMsg);
+    logger.error("ERROR ", errMsg);
     this.valid = false;
     this.error = errMsg;
 }

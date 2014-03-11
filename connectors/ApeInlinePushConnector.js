@@ -1,7 +1,8 @@
+var logger = require("./logger");
 var url = require('url');
 
 var ApeInlinePushConnector = function (dispatcher, prefix, authToken) {
-    console.log("Init push connector server")
+    logger.info("Init push connector server")
     this.dispatcher = dispatcher;
     this.prefix = prefix
     this.authToken = authToken;
@@ -17,19 +18,19 @@ ApeInlinePushConnector.prototype.push = function (req, res) {
         pushUrl = decodeURIComponent(pushUrl);
     }
 
-    console.log(pushUrl);
+    logger.debug(pushUrl);
     try {
         var pushData = JSON.parse(pushUrl);
     } catch (ex) {
-        console.log("Unexpected format: ", ex.message);
+        logger.warn("Unexpected format: ", ex.message);
         return this.fail(req, res, 404, "Unexpected format: " + ex.message);
     }
-    console.log(pushData);
+    logger.debug(pushData);
 
     //expect an array of objects with cmd and params
     var l = pushData.length;
     if ((l == 0) || (l > 10)) {
-        console.log("Too many commands at once");
+        logger.error("Too many commands at once");
         return this.fail(req, res, 404, "Too many commands at once: " + l);
     }
 
@@ -45,11 +46,11 @@ ApeInlinePushConnector.prototype.push = function (req, res) {
 
         //check password here
         if (password !== this.authToken) {
-            console.log("Wrong password/auth token for push");
+            logger.info("Wrong password/auth token for push");
             return this.fail(req, res, 401, "Wrong password");
         }
 
-        console.log(cmd, password, event, "CHANNEL", channel, "USER", user, data);
+        logger.debug(cmd, password, event, "CHANNEL", channel, "USER", user, data);
         //create dispatch
         var targets = {};
         if (cmd === "notifyChannel") {

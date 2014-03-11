@@ -68,3 +68,7 @@ For each of these connections, data needs to follow certain structures.
 * ApeInlinePushConnector (for compatibility)
 * Redis Pub/Sub (close future plan)
 * RabbitMQ (far future plan)
+
+##Usage
+Logging:
+You can use  '''npm config set turted:loglevel "debug"''' to change the loglevel to debug. TURTED currently depends on winston
