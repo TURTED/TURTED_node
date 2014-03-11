@@ -1,4 +1,4 @@
-var logger = require("../models/logger");
+var logger = require("../models/Logger");
 var Connection = require('../models/Connection');
 var sockjs = require('sockjs');
 

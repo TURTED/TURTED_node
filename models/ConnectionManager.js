@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("./Logger");
 var Collection = require('./Collection');
 var ConnectionManager = function() {
 

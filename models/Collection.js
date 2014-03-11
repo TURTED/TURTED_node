@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("./Logger");
 var Collection = function() {
     this._items = {};
 }

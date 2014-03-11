@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("./Logger");
 var events = require('events');
 var util = require('util');
 var Collection = require('./Collection');

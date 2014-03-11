@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("./Logger");
 var RawData = function (rawData) {
     this.valid = false;
     this.type = "";

@@ -1,4 +1,4 @@
-var logger = require("../models/logger");
+var logger = require("../models/Logger");
 var crypto = require("crypto");
 
 var TokenAuthenticator = function(prefix, suffix, hashType) {

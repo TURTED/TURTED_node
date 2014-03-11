@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("./Logger");
 var _ = require("lodash-node");
 var RawData = require('./RawData');
 

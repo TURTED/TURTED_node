@@ -1,4 +1,4 @@
-var logger = require("./logger");
+var logger = require("../models/Logger");
 var url = require('url');
 
 var ApeInlinePushConnector = function (dispatcher, prefix, authToken) {
