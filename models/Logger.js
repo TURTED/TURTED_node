@@ -5,6 +5,8 @@ if (typeof loglevel === "undefined") {
     loglevel="error";
 }
 
+console.log("Using loglevel ",loglevel);
+
 var logger = new (winston.Logger)({
     transports: [
         //new (winston.transports.Console)({ level: 'error' }),
