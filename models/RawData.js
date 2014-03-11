@@ -3,8 +3,11 @@ var RawData = function (rawData) {
     this.valid = false;
     this.type = "";
     this.data = {};
-    this.rawData = rawData;
-    this.validate();
+    //if data was passed, verify it
+    if (typeof rawData !=="undefined") {
+        this.rawData = rawData;
+        this.validate();
+    }
 }
 
 RawData.prototype.validate = function () {
