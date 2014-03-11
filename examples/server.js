@@ -2,7 +2,7 @@ var port = 80;
 var http = require('http');
 
 var turted = require('turted');
-var config = require('config.js');
+var config = require('./config.js');
 
 //some basic url handling
 var server = http.createServer();
