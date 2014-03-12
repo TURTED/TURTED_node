@@ -82,7 +82,6 @@ RawData.prototype.getData = function () {
 RawData.prototype.create = function (type, data) {
     this.type = type;
     this.data = data;
-    this.validate();
     return this;
 }
 
