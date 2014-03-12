@@ -1,11 +1,11 @@
 var winston = require("winston");
 
-var loglevel =process.env.npm_package_config_loglevel;
+var loglevel = process.env.npm_package_config_loglevel;
 if (typeof loglevel === "undefined") {
-    loglevel="error";
+    loglevel = "error";
 }
 
-console.log("Using loglevel ",loglevel);
+console.log("Using loglevel ", loglevel);
 
 var logger = new (winston.Logger)({
     transports: [

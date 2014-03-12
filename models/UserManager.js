@@ -25,27 +25,29 @@ UserManager.prototype.handleIdent = function (conn, data) {
             responseData = {};
         }
     }
-    this.addUserConnection(data.username,conn);
+    this.addUserConnection(data.username, conn);
     var rd = new RawData().create(response, responseData).encode();
     logger.debug(rd);
     conn.send(rd);
 }
 
-UserManager.prototype.addUserConnection  = function (username, conn) {
+UserManager.prototype.addUserConnection = function (username, conn) {
     if (!(this.users.has(username))) {
         this.users.add(username, new Collection());
     }
     this.users.get(username).add(conn.id, conn);
-    conn.on("close",function() {
-        this.delUserConnection.call(this,username, conn);
+    conn.on("close", function () {
+        this.delUserConnection.call(this, username, conn);
     }.bind(this));
 }
 
-UserManager.prototype.delUserConnection  = function (username, conn) {
+UserManager.prototype.delUserConnection = function (username, conn) {
     var user = this.users.get(username);
-    user.remove(conn.id);
-    if (user.isEmpty()) {
-        this.users.remove(username);
+    if (typeof user !== "undefined") {
+        user.remove(conn.id);
+        if (user.isEmpty()) {
+            this.users.remove(username);
+        }
     }
 }
 
