@@ -12,6 +12,7 @@ var tests = [
     "ChannelTest",
     "ChannelManagerTest",
     "DispatchTest",
+    "DispatcherTest",
     "ConnectionHandlerTest",
 ];
 
