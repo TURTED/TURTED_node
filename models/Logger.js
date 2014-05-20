@@ -1,32 +1,25 @@
-var winston = require("winston");
+var loglevel = process.env.npm_package_config_loglevel || "error";
 
-var loglevel = process.env.npm_package_config_loglevel;
-if (typeof loglevel === "undefined") {
-    loglevel = "error";
-}
+var logLevels = [
+    "debug",
+    "info",
+    "warn",
+    "error",
+]
 
 console.log("Using loglevel ", loglevel);
 
-var logger = new (winston.Logger)({
-    transports: [
-        //new (winston.transports.Console)({ level: 'error' }),
-        new (winston.transports.Console)({ level: loglevel }),
-        //new (winston.transports.File)({ filename: 'somefile.log' })
-    ]
-});
+var Logger = function () {
 
-//logger.add(winston.transports.File, { filename: "../logs/production.log" });
+    this.log = function (level) {
+        if (logLevels.indexOf(level) >= logLevels.indexOf(loglevel)) {
+            console.log.apply(this, arguments);
+        }
+    }
+}
+var logger = new Logger();
 
-/*
- var print = function() {
- console.log.call(this,arguments);
- }
- var logger = {
- info: print,
- warn: print,
- error: print,
- debug: print
- }
- */
-
+logLevels.forEach(function (lvl) {
+    logger[lvl] = logger.log.bind(this, lvl);
+})
 module.exports = logger;
