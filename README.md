@@ -71,7 +71,7 @@ For each of these connections, data needs to follow certain structures.
 
 ##Usage
 Logging:
-You can use  '''npm config set turted:loglevel "debug"''' to change the loglevel to debug. TURTED currently depends on winston
+~~You can use  '''npm config set turted:loglevel "debug"''' to change the loglevel to debug.~~
 
 Listening to dispatched events on the server:
 The dispatcher emits all events it emits to the clients as a node event, so
