@@ -77,3 +77,6 @@ Listening to dispatched events on the server:
 The dispatcher emits all events it emits to the clients as a node event, so
 dispatcher.on("nameOfTheEvent", function() { console.log("It happened") });
 can help creating custom functionality on the server
+
+##TODO List
+* Add a "via" collection to Dispatch (like connId: {"user": "adam" } or connId: {"channel": "chat"}) and pass this to the client to inform "why" he got this push by giving some context. Note to self: add during "Now I'm dispatching it"
