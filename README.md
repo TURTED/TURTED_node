@@ -57,27 +57,29 @@ notifyUser (username, eventname, payload)
 notifyChannel (channelname, eventname, payload)
 notify(array(channels, users), eventname, payload)
 ##Client to Server
-* ident(payload)
-
-    ```examples: turted.ident({username:"foo", password: "bar"});```
-    ```examples: turted.ident({username:"foo", token: "h57dlot8"});```
-On the server side, an "Authenticator" will be needed to handle the payload and verifiy the username/password or user/token provided
+* ident(dataForAuth)
+```javascript
+  examples: turted.ident({username:"foo", password: "bar"});
+  examples: turted.ident({username:"foo", token: "h57dlot8"});
+```
+On the server side, an "Authenticator" will be needed to handle the data and verify the username/password or user/token provided. This can be any object that implements a ```verify``` method and can return true or false based on the data it received
     
-* join
-* leave
+* join(channelname)
+* leave(channelname)
+* 
 ##Server to Client
 * event
-* confirm (an ident)
 
 #Connectors#
 ##Client to Server
-* ~~ sock.js~~
+* ~~sock.js~~
 * socket.io
 
-##Backend to Server
-* ApeInlinePushConnector (for compatibility, becoming obsolete)
-* Redis Pub/Sub (close future plan)
+##Backend to Server (PushConnector)
+* RestPushConnector, receiving an HTTP POST request
+* Redis Pub/Sub (future plan)
 * RabbitMQ (far future plan)
+* FileTailConnector (to be considered for live-logging)
 
 ##Usage
 Logging:
