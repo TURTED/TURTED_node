@@ -9,23 +9,22 @@ digraph Objects {
 
 	NativeConnection -> SocketioClientConnector
 	SocketioClientConnector	-> Connection [label="creates"]
-	Connection -> ConnectionHandler [label="registers"]
+	Connection -> ConnectionManager [label="registers"]
 
 	Connection -> NativeConnection [label="includes"]
 
-	ConnectionHandler -> ConnectionManager
-	ConnectionHandler -> UserManager
-	ConnectionHandler -> ChannelManager
+	ConnectionManager -> Auth ->UserManager
+	ConnectionManager -> ChannelManager
+	Auth -> ConnectionManager
 
-	ConnectionHandler ->Dispatcher
-	UserManager ->ConnectionHandler
-	ChannelManager ->ConnectionHandler
-	ConnectionManager ->ConnectionHandler
+	ConnectionManager ->Dispatcher
+	UserManager ->ConnectionManager
+	ChannelManager ->ConnectionManager
 
 	PushConnector -> Dispatcher [label="external event"]
 	#FileTailConnector -> Dispatcher
 	#RedisPubSubConnector -> Dispatcher	
 	#RabbitMQConnector -> Dispatcher
 
-	Dispatcher -> ConnectionHandler [label="send event"]
+	Dispatcher -> ConnectionManager [label="send event"]
 }
