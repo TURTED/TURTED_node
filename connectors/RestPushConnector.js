@@ -44,7 +44,7 @@ RestPushConnector.prototype.push = function(req, res) {
             try {
                 var pushData = JSON.parse(rawdata);
             } catch (e) {
-                console.log(rawdata, "is not json");
+                logger.debug(rawdata, "is not json");
                 me.fail(req, res, 404, "Data was not json");
                 return;
             }
@@ -54,48 +54,57 @@ RestPushConnector.prototype.push = function(req, res) {
             var password = pushData.password || "";
 
             if (!("data" in pushData)) {
-                console.log("data parameter missing in pushdata");
+                logger.debug("data parameter missing in pushdata");
                 me.fail(req, res, 404, "data missing")
                 return;
             }
 
             var event = pushData.data.event || "";
-            var channel = pushData.data.channels || [];
-            var user = pushData.data.user || [];
+            var user = pushData.data.user || "";
+            var users = pushData.data.users || [];
+            var channel = pushData.data.channel || "";
+            var channels = pushData.data.channels || [];
             var payload = pushData.data.payload || {};
 
             //check password here
             if (password !== me.authToken) {
                 //logger.info(password + "!=" + me.authToken);
-                logger.info("Wrong password/auth token for push");
+                logger.debug("Wrong password/auth token for push");
                 return me.fail(req, res, 401, "Wrong password");
             }
 
-            //console.log(cmd, password, event, "CHANNEL", channel, "USER", user, payload);
+            if (user) {
+                if (typeof user === "string") {
+                    users.push(user);
+                }
+            }
+
+            if (channel) {
+                if (typeof channel === "string") {
+                    channels.push(channel);
+                }
+            }
+
             //create dispatch
             var targets = {};
-            if (cmd === "notifyChannel") {
-                targets = {
-                    channels: [channel]
-                }
-            } else if (cmd === "notifyUser") {
-                targets = {
-                    users: [user]
-                }
-            } else if (cmd === "notifyAll") {
+            if (channels.length > 0) targets["channels"] = channels;
+            if (users.length > 0) targets["users"] = users;
+            if (cmd === "notifyAll") {
                 targets = {
                     broadcast: true
                 };
             }
+            //console.log(payload);
+            //console.log(targets);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
             return true;
         });
     } else {
-        console.log("[405] " + req.method + " to " + req.url);
+        //console.log("[405] " + req.method + " to " + req.url);
         res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
         res.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
-        return;
+        return
     }
 };
 
