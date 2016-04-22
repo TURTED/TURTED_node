@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "dependencies": {
     "lodash-node": "*",
-    "socketio": "~1.0.0",
-    "socket.io": "~1.4.5"
+    "socket.io": "^1.4.5"
   },
   "devDependencies": {
     "nodeunit": "*"
