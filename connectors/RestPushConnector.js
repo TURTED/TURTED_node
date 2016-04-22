@@ -91,12 +91,11 @@ RestPushConnector.prototype.push = function(req, res) {
             me.success(req, res, 200, "OK");
             return true;
         });
-        console.log("waiting for data");
     } else {
         console.log("[405] " + req.method + " to " + req.url);
         res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
         res.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
-        return
+        return;
     }
 };
 

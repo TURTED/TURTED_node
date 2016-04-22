@@ -1,7 +1,7 @@
 //Connectors
-exports.SockJsClientConnector = require('./connectors/SockJsClientConnector');
+//exports.SockJsClientConnector = require('./connectors/SockJsClientConnector');
 exports.SocketioClientConnector = require('./connectors/SocketioClientConnector');
-exports.ApeInlinePushConnector = require('./connectors/ApeInlinePushConnector');
+//exports.ApeInlinePushConnector = require('./connectors/ApeInlinePushConnector');
 exports.RestPushConnector = require('./connectors/RestPushConnector');
 
 //Auth
