@@ -8,7 +8,8 @@ Basic idea:
 Create an abstraction protocol for handling real time connections to push events from server to client.
 Users can log in and join channels so the server can push messages to selected clients (via username or channel)
 
-Example (work in progress, but that's roughly what I want to end up with):
+
+Example (work in progress, but that's roughly what we want to end up with):
 
 *PHP Server*
 ```php
@@ -32,40 +33,49 @@ Heavily inspired by the work of the http://ape-project.org and based on my imple
 
 Why?
 ----
-It looks like the first thing everybody implements when playing with nodejs and sock.js is a basic chat application, but I did not really find a library out there taking the load of the dev when you need a little bit more funtionality.
+It looks like the first thing everybody implements when playing with nodejs and sock.js is a basic chat application, but we did not really find a library out there taking the load of the dev when you need a little bit more funtionality.
 
-Especially handling channels and providing a clean and operational client interface while managing users is the target of this project.
-
-What else?
-----------
-This is my first node.js project, so I wanted to give it a spin even if I'm re-inventing some wheels or violate agains
-the NIH principle.
-And also, if I don't do stuff "the node way", I apologize. Just let me know.
-It also might be that I'm "over-engineering" the whole thing. As said, it's also meant for playing with stuff like node unit tests, trying to stick to a strict SOLID principle, etc... comments and recommendations are welcome!!!
-
+Especially handling channels and providing a clean and operational client interface while **managing users** is the target of this project.
 
 [![Build Status](https://travis-ci.org/TURTED/TURTED_node.png?branch=master)](https://travis-ci.org/TURTED/TURTED_node)
 
 #Glossary#
 Since TURTED is intended to dispatch/emit events from any arbitrary backend app via a central server to many clients, we have three parties included:
 * the backend app (PHP, Java, ...)
-* the TURTED server for handling real-time connections (node.js or ape)
-* the clients (browsers, connected via websocket or any other connection allowing push data)
+* the TURTED server for handling real-time connections (node.js)
+* the clients (browsers, connected via websocket/socket.io/sockjs or any other connection allowing push data)
 
-For each of these connections, data needs to follow certain structures.
-*All data is encoded using JSON*
+#Internal Handling#
+To allow for different transports, the idea is to abstract the underlying framework (socket.io, sockjs, ...)
+So all connections between the TURTED client and TURTED server are layers on top of the used transport.
+To achieve this, all native connections (socket.io, sockjs, ...) are encapsulated into a "Connection" with a clear interface.
+All interactions need to be translated by the Connection to and from the native connection.
 
 #Protocol#
 ##Backend to Server
-##Server to Client
+notifyUser (username, eventname, payload)
+notifyChannel (channelname, eventname, payload)
+notify(array(channels, users), eventname, payload)
 ##Client to Server
+* ident(payload)
+
+    ```examples: turted.ident({username:"foo", password: "bar"});```
+    ```examples: turted.ident({username:"foo", token: "h57dlot8"});```
+On the server side, an "Authenticator" will be needed to handle the payload and verifiy the username/password or user/token provided
+    
+* join
+* leave
+##Server to Client
+* event
+* confirm (an ident)
 
 #Connectors#
 ##Client to Server
-* sock.js
+* ~~ sock.js~~
+* socket.io
 
 ##Backend to Server
-* ApeInlinePushConnector (for compatibility)
+* ApeInlinePushConnector (for compatibility, becoming obsolete)
 * Redis Pub/Sub (close future plan)
 * RabbitMQ (far future plan)
 
@@ -73,7 +83,7 @@ For each of these connections, data needs to follow certain structures.
 Logging:
 ~~You can use  '''npm config set turted:loglevel "debug"''' to change the loglevel to debug.~~
 
-Listening to dispatched events on the server:
+Listening to dispatched events on the TURTED server:
 The dispatcher emits all events it emits to the clients as a node event, so
 dispatcher.on("nameOfTheEvent", function() { console.log("It happened") });
 can help creating custom functionality on the server

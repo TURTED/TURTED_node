@@ -13,7 +13,7 @@ util.inherits(Channel, events.EventEmitter);
 
 Channel.prototype.join = function (conn) {
     this.connections.add(conn.id, conn);
-    conn.on("close", this.leave.bind(this))
+    conn.on("CLOSE", this.leave.bind(this))
 }
 
 Channel.prototype.leave = function (conn) {

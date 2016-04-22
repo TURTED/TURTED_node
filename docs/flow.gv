@@ -1,18 +1,17 @@
 digraph Objects {
 
+	"Turted Client" -> "Socket.io Client"
+	"Socket.io Client"->"Turted Client"
+	"Socket.io Client" -> "Socket.io Server"
+	"Socket.io Server"->"Socket.io Client" 
+	"Socket.io Server" -> NativeConnection
+	NativeConnection -> "Socket.io Server"
+
+	NativeConnection -> SocketioClientConnector
+	SocketioClientConnector	-> Connection [label="creates"]
 	Connection -> ConnectionHandler [label="registers"]
 
-	SockJsClientConnector	-> Connection [label="creates"]
-
-	Connection -> NativeConnection [label="encapsulates"]
-	NativeConnection -> Connection
-
-	Client -> TURTED_Protocol
-	TURTED_Protocol -> Client
-	TURTED_Protocol -> SockJs
-	SockJs -> TURTED_Protocol
-	SockJs -> NativeConnection
-	NativeConnection -> SockJs
+	Connection -> NativeConnection [label="includes"]
 
 	ConnectionHandler -> ConnectionManager
 	ConnectionHandler -> UserManager
@@ -23,10 +22,10 @@ digraph Objects {
 	ChannelManager ->ConnectionHandler
 	ConnectionManager ->ConnectionHandler
 
-	ApeInlinePushConnector -> Dispatcher [label="external event"]
+	PushConnector -> Dispatcher [label="external event"]
 	#FileTailConnector -> Dispatcher
 	#RedisPubSubConnector -> Dispatcher	
 	#RabbitMQConnector -> Dispatcher
 
-	Dispatcher -> Connection [label="send event"]
+	Dispatcher -> ConnectionHandler [label="send event"]
 }

@@ -1,34 +1,35 @@
 {
-    "name": "turted",
-    "version": "0.1.0",
-    "dependencies": {
-        "sockjs": "*",
-        "lodash-node": "*"
-    },
-    "devDependencies": {
-        "nodeunit": "*"
-    },
-    "description": "The Universal Real Time Event Dispatcher",
-    "homepage": "http://turted.xosofox.de",
-    "main": "index.js",
-    "directories": {
-        "test": "test"
-    },
-    "scripts": {
-        "test": "nodeunit test/test.js"
-    },
-    "keywords": [
-        "real-time",
-        "event",
-        "dispatcher"
-    ],
-    "author": "Peter Dietrich",
-    "license": "ISC",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/TURTED/TURTED_node.git"
-    },
-    "config": {
-        "loglevel": "error"
-    }
+  "name": "turted",
+  "version": "0.1.0",
+  "dependencies": {
+    "lodash-node": "*",
+    "socketio": "~1.0.0",
+    "socket.io": "~1.4.5"
+  },
+  "devDependencies": {
+    "nodeunit": "*"
+  },
+  "description": "The Universal Real Time Event Dispatcher",
+  "homepage": "http://turted.xosofox.de",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "nodeunit test/test.js"
+  },
+  "keywords": [
+    "real-time",
+    "event",
+    "dispatcher"
+  ],
+  "author": "Peter Dietrich",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TURTED/TURTED_node.git"
+  },
+  "config": {
+    "loglevel": "error"
+  }
 }

@@ -1,10 +1,10 @@
-//stupid test if my own mocking class MockSock behaves corretly. Testing the tests, you know...
-
+//stupid test if my own mocking class MockSock behaves correctly. Testing the tests, you know...
 
 //MockSock is supposed to mock a SockJs connection
 
 var NativeConnection = require('./mock/MockSock');
 
+//Sockjs behaviour
 exports.emitsReceiveEvent = function (test) {
     test.expect(1);
     var natConn = new NativeConnection();
@@ -22,6 +22,7 @@ exports.emitsReceiveEvent = function (test) {
     natConn.data({asdf:"asdf"});
 };
 
+//Sockjs behaviour
 exports.emitsCloseEvent = function (test) {
     test.expect(1);
     var natConn = new NativeConnection();
@@ -33,9 +34,26 @@ exports.emitsCloseEvent = function (test) {
 
     natConn.on("close",function() {
         clearTimeout(errTO);
-        test.ok(true,"Sending data fired 'close' event")
+        test.ok(true,"calling close fires 'close' event")
         test.done();
     })
     natConn.close();
 };
 
+exports.emitDisconnectionEvent = function (test) {
+    test.expect(1);
+    var natConn = new NativeConnection();
+
+    var errTO = setTimeout(function() {
+        test.ok(false,"Expected 'connection' event did not fire");
+        test.done();
+    },50);
+
+    natConn.on("disconnect",function() {
+        clearTimeout(errTO);
+        test.ok(true,"calling disconnect fires 'disconnect' event")
+        test.done();
+    })
+    
+    natConn.disconnect();
+};

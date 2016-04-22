@@ -2,46 +2,23 @@ var logger = require("./Logger");
 var RawData = require('./RawData');
 var Collection = require('./Collection');
 
-var UserManager = function (auth) {
-    this.auth = auth;
+var UserManager = function() {
     this.users = new Collection();
+};
 
-    this.addConnection.bind(this);
-}
-
-UserManager.prototype.addConnection = function (conn) {
-    //register events that userMan cares about
-    conn.on("RX:IDENT", function (conn, data) {
-        this.handleIdent.call(this, conn, data);
-    }.bind(this));
-}
-
-UserManager.prototype.handleIdent = function (conn, data) {
-    var response = "ERR";
-    var responseData = {ERR: "UNIDENTIFIED"};
-    if ((data.hasOwnProperty("username")) && (data.hasOwnProperty("token"))) {
-        if (this.auth.verify(data.username, data.token)) {
-            response = "IDENTIFIED";
-            responseData = {};
-        }
-    }
-    this.addUserConnection(data.username, conn);
-    var rd = new RawData().create(response, responseData).encode();
-    logger.debug(rd);
-    conn.send(rd);
-}
-
-UserManager.prototype.addUserConnection = function (username, conn) {
+UserManager.prototype.addUserConnection = function(username, conn) {
+    logger.debug("Add conn", conn.id, "for", username);
     if (!(this.users.has(username))) {
         this.users.add(username, new Collection());
     }
     this.users.get(username).add(conn.id, conn);
-    conn.on("close", function () {
+    conn.on("CLOSE", function() {
+        logger.debug("Close connection", conn.id, "for user", username);
         this.delUserConnection.call(this, username, conn);
     }.bind(this));
-}
+};
 
-UserManager.prototype.delUserConnection = function (username, conn) {
+UserManager.prototype.delUserConnection = function(username, conn) {
     var user = this.users.get(username);
     if (typeof user !== "undefined") {
         user.remove(conn.id);
@@ -49,14 +26,14 @@ UserManager.prototype.delUserConnection = function (username, conn) {
             this.users.remove(username);
         }
     }
-}
+};
 
-UserManager.prototype.getUserConnections = function (user) {
+UserManager.prototype.getUserConnections = function(user) {
     if (this.users.has(user)) {
         return this.users.get(user).getItems();
     } else {
         return {};
     }
-}
+};
 
 module.exports = UserManager;

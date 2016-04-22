@@ -10,7 +10,7 @@ var RawData = require('./RawData');
  * @constructor
  */
 
-var Connection = function (nativeConnection) {
+var Connection = function(nativeConnection) {
     logger.debug("New connection");
     if (typeof nativeConnection === "undefined") {
         throw "NO_NATIVE_CONNECTION";
@@ -18,16 +18,19 @@ var Connection = function (nativeConnection) {
 
     this.nativeConnection = nativeConnection;
 
-    if (typeof nativeConnection.on !== "undefined") {
-        nativeConnection.on("close",this.close.bind(this));
-    }
+    /**
+     * COnnection should not implement specific native evetns - needs to be done by CLientConnector
+     */
+    //if (typeof nativeConnection.on !== "undefined") {
+    //nativeConnection.on("disconnect", this.close.bind(this));
+    //}
 
     if (nativeConnection.id) {
         this.id = nativeConnection.id;
     } else {
         //some long id
         var n = 2;
-        this.id = Array.apply(0, Array(n)).reduce(function (p) {
+        this.id = Array.apply(0, Array(n)).reduce(function(p) {
             return p + (Math.random() * 1e18).toString(36)
         }, '');
     }
@@ -38,33 +41,18 @@ var Connection = function (nativeConnection) {
 util.inherits(Connection, events.EventEmitter);
 //Connection.prototype.__proto__ = events.EventEmitter.prototype;
 
-Connection.prototype.receive = function (message) {
-    logger.debug("Abstracted connection got a message", message);
-
-    //decode incoming message
-    var rd = new RawData(message);
-
-    //if it is a valid packet, emit event type from package
-    if (rd.isValid()) {
-        var t = rd.getType();
-        var d = rd.getData();
-
-        //emit named event type with RX prefix to avoid client sending "internal" commands as events
-        //emits event, connection and data
-        this.emit("RX:" + t.toUpperCase(), this, d);
-    } else {
-        console.log("Dropping invalid message ",message);
-    }
+Connection.prototype.receive = function(cmd, data) {
+    logger.debug("TURTED Connection got a cmd", cmd, "with data", data);
+    this.emit(cmd.toUpperCase(), this, data);
 }
 
-Connection.prototype.close = function () {
-    logger.debug("Abstract connection close");
-    this.emit("close",this);
+Connection.prototype.close = function() {
+    logger.debug("TURTED Connection", this.id, "CLOSE called");
+    this.emit("CLOSE", this);
 }
 
-Connection.prototype.send = function (message) {
-    logger.debug("Sending a message ", message);
-    this.emit("send", message);
+Connection.prototype.send = function(message) {
+    logger.error("NEED TO OVERWRITE THIS IN ClientConnector");
 }
 
 module.exports = Connection;

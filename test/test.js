@@ -2,25 +2,28 @@
 
 var tests = [
     //"example",
+    "UserTest",
+    "MockSockTest",
+    "MockServTest",
+    "SocketioClientConnectorTest",
     "ConnectionTest",
     "RawDataTest",
-    "MockSockTest",
     "TokenAuthenticatorTest",
-    "ConnectionManagerTest",
-    "UserTest",
-    "UserManagerTest",
-    "ChannelTest",
-    "ChannelManagerTest",
     "DispatchTest",
     "DispatcherTest",
-    "ConnectionHandlerTest",
+    "ChannelTest",
+    "ChannelManagerTest",
+    "UserManagerTest",
+    "IdentTest",
+    "ConnectionManagerTest",
+    "CollectionTest",
 ];
 
-//tests = ["ChannelManagerTest"];
+//tests = ["ConnectionTest"];
 
-for (var i = 0; i<tests.length;i++) {
+for (var i = 0; i < tests.length; i++) {
     var testName = tests[i];
-    exports[testName] = require('./'+testName);
+    exports[testName] = require('./' + testName);
 }
 
 
