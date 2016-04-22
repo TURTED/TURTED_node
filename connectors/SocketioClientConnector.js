@@ -15,37 +15,36 @@ var SockJsClientConnector = function(socketServer, connManager) {
         //forward native connection events to our own transparent connection
         //nativeConnection.on('data', conn.receive);
         nativeConnection.on('IDENT', function(data) {
-            console.log("Da kam ein ident", data)
+            logger.debug("Native connection received ident", data)
             conn.receive.call(conn, "IDENT", data);
         });
         nativeConnection.on('JOIN', function(data) {
-            logger.debug("Native join received join ", data);
+            logger.debug("Native connection received join", data);
             conn.receive.call(conn, "JOIN", data);
         });
         nativeConnection.on('message', function(data) {
-            logger.debug("Native Connection received ", data);
+            logger.debug("Native connection received", data);
             conn.receive.call(conn, data);
         });
 
         nativeConnection.on('PING', function(data) {
-            logger.debug("Native Connection received ", data);
+            logger.debug("Native connection received", data);
             conn.receive.call(conn, "PING", data);
         });
 
         nativeConnection.on('ECHO', function(data) {
-            logger.debug("Native Connection received ", data);
+            logger.debug("Native connection received", data);
             conn.receive.call(conn, "ECHO", data);
         });
 
         nativeConnection.on("disconnect", function(data) {
-            logger.debug("Native Connection disconnect -> CLOSE")
+            logger.debug("Native connection disconnect -> CLOSE")
             conn.receive.call(conn, "CLOSE", data);
         });
 
         //set adequate "send" function here that translates to native
         conn.send = function() {
             logger.debug("Send data to native conn");
-            console.log(arguments);
             nativeConnection.emit.apply(nativeConnection, arguments);
         };
 
