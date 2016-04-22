@@ -66,11 +66,11 @@ On the server side, an "Authenticator" will be needed to handle the data and ver
     
 * join(channelname)
 * leave(channelname)
-* 
+
 ##Server to Client
 * event
 
-#Connectors#
+#Connectors
 ##Client to Server
 * ~~sock.js~~
 * socket.io
