@@ -109,11 +109,13 @@ ConnectionManager.prototype.resolve = function(dispatch) {
         dispatch.addTargetConnections(this.userManager.getUserConnections(username));
     }.bind(this));
 
-    //check for channels
-    _.each(dispatch.getTargetChannels(), function(channel) {
-        logger.debug("resolving channel", channel);
-        dispatch.addTargetConnections(this.channelManager.getChannelConnections(channel));
-    }.bind(this))
+    if (this.channelManager) {
+        //check for channels
+        _.each(dispatch.getTargetChannels(), function(channel) {
+            logger.debug("resolving channel", channel);
+            dispatch.addTargetConnections(this.channelManager.getChannelConnections(channel));
+        }.bind(this))
+    }
 };
 
 module.exports = ConnectionManager;
