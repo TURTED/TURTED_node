@@ -47,10 +47,10 @@ ChannelManager.prototype.handleLeave = function(channelName, conn) {
 
 ChannelManager.prototype.getChannelConnections = function(channel) {
     if (this.channels.has(channel)) {
-        logger.debug("Hab den channel");
+        logger.debug("Channel known");
         return this.channels.get(channel).getConnections();
     } else {
-        logger.debug("Nix channel");
+        logger.debug("Channel unknown");
         return {};
     }
 };
