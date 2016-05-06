@@ -83,7 +83,7 @@ On the server side, an "Authenticator" will be needed to handle the data and ver
 
 ##Usage
 Logging:
-~~You can use  '''npm config set turted:loglevel "debug"''' to change the loglevel to debug.~~
+You can set an environment variable TURTED_LOGLEVEL to change the loglevel. ```set TURTED_LOGLEVEL debug``` will give details on every connection. Handle with care!
 
 Listening to dispatched events on the TURTED server:
 The dispatcher emits all events it emits to the clients as a node event, so
