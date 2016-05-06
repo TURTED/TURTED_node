@@ -7,7 +7,7 @@ var User = function(name) {
 
 User.prototype.add = function(conn) {
     this.connections.add(conn.id, conn);
-    conn.on("CLOSE",this.remove.bind(this))
+    conn.once("CLOSE",this.remove.bind(this))
 }
 
 User.prototype.remove = function(conn) {

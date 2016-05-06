@@ -12,7 +12,7 @@ UserManager.prototype.addUserConnection = function(username, conn) {
         this.users.add(username, new Collection());
     }
     this.users.get(username).add(conn.id, conn);
-    conn.on("CLOSE", function() {
+    conn.once("CLOSE", function() {
         logger.debug("Close connection", conn.id, "for user", username);
         this.delUserConnection.call(this, username, conn);
     }.bind(this));

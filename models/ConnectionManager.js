@@ -22,7 +22,11 @@ ConnectionManager.prototype.addConnection = function(conn) {
     this.connections.add(conn.id, conn);
     var me = this;
 
-    conn.on("CLOSE", function() {
+    conn.once("CLOSE", function() {
+        logger.debug("Remove connection and listeners");
+        conn.removeListener("ECHO", me.echo.bind(me));
+        conn.removeListener("IDENT", me.ident.bind(me));
+        conn.removeListener("JOIN", me.join.bind(me));
         this.connections.remove(conn.id);
     }.bind(this));
 
