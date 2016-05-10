@@ -1,9 +1,9 @@
 var logger = require("../models/Logger");
 var url = require('url');
 
-var RestPushConnector = function(dispatcher, prefix, authToken) {
+var RestPushConnector = function(commandBus, prefix, authToken) {
     logger.info("Init REST push connector server")
-    this.dispatcher = dispatcher;
+    this.commandBus = commandBus;
     this.prefix = prefix
     this.authToken = authToken;
 
@@ -96,7 +96,12 @@ RestPushConnector.prototype.push = function(req, res) {
             }
             //console.log(payload);
             //console.log(targets);
-            me.dispatcher.dispatchEventDataTarget(event, payload, targets);
+             me.commandBus.send("DISPATCH", {
+                 event: event,
+                 payload: payload,
+                 targets: targets
+             });
+            
             me.success(req, res, 200, "OK");
             return true;
         });
