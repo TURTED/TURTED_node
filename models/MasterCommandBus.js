@@ -35,9 +35,7 @@ MasterCommandBus.prototype.send = function(event, payload) {
         "event": event,
         "data": payload
     };
-    process.send(busdata, null, function(data) {
-        console.log("RR", data);
-    });
+    process.send(busdata);
 };
 
 module.exports = MasterCommandBus;
