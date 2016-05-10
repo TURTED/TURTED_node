@@ -7,10 +7,6 @@ var _ = require("lodash-node");
 var io = require('socket.io');
 var turted = require('../turted.js');
 var config = require('./config.js');
-var MasterCommandBus = require('../models/MasterCommandBus');
-var WorkerCommandBus = require('../models/WorkerCommandBus');
-var MasterDataCollector = require('../models/MasterDataCollector');
-var WorkerDataCollector = require('../models/WorkerDataCollector');
 var cmdBus;
 var dataCollector;
 
@@ -20,8 +16,8 @@ if (cluster.isMaster) {
     var connectionCounters = [];
     var userCounters = [];
 
-    cmdBus = new MasterCommandBus(cluster);
-    dataCollector = new MasterDataCollector(cluster);
+    cmdBus = new turted.MasterCommandBus(cluster);
+    dataCollector = new turted.MasterDataCollector(cluster);
 
     console.log('Master cluster setting up ' + numWorkers + ' workers...');
 
@@ -59,12 +55,12 @@ if (cluster.isMaster) {
         console.log("Connections: (" + connectionCounters.join("|") + ") = " + totC);
     }
 } else {
-    cmdBus = new WorkerCommandBus();
+    cmdBus = new turted.WorkerCommandBus();
     cmdBus.on("CONNECTION", function(data) {
         console.log("Jemand bekam eine Connection");
     });
 
-    dataCollector = new WorkerDataCollector();
+    dataCollector = new turted.WorkerDataCollector();
 
     //create a basic server
     var server = http.createServer();
@@ -97,7 +93,6 @@ if (cluster.isMaster) {
     var pushAuthToken = "IamAllowed2PUSH!!!";
     var pushRegExp = new RegExp(pushPrefix);
 
-    //var pushConnector = new turted.ApeInlinePushConnector(dispatcher, pushPrefix, pushAuthToken);
     var pushConnector = new turted.RestPushConnector(cmdBus, pushPrefix, pushAuthToken);
 
     server.addListener('request', function(req, res) {
@@ -124,8 +119,8 @@ if (cluster.isMaster) {
 
     //sudden death
     /*
-    setInterval(function() {
-        process.exit();
-    }, Math.random() * 20000);
-    */
+     setInterval(function() {
+     process.exit();
+     }, Math.random() * 20000);
+     */
 }
