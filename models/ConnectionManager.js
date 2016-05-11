@@ -90,7 +90,6 @@ ConnectionManager.prototype.join = function(conn, data) {
 ConnectionManager.prototype.clientmessage = function(conn, message) {
     //the client sent a message
     logger.debug("Here ConnectionManager! ", conn.id, " sent ", message);
-    conn.send(new RawData().create("welcome").encode());
 };
 
 ConnectionManager.prototype.resolve = function(dispatch) {

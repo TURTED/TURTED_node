@@ -14,7 +14,3 @@ exports.ConnectionManager = require('./models/ConnectionManager');
 exports.UserManager = require('./models/UserManager');
 exports.ChannelManager = require('./models/ChannelManager');
 
-exports.MasterCommandBus = require('./models/MasterCommandBus');
-exports.WorkerCommandBus = require('./models/WorkerCommandBus');
-exports.MasterDataCollector = require('./models/MasterDataCollector');
-exports.WorkerDataCollector = require('./models/WorkerDataCollector');

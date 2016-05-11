@@ -1,5 +1,4 @@
 var logger = require("./Logger");
-var RawData = require('./RawData');
 var Dispatch = require('./Dispatch');
 var events = require('events');
 var util = require('util');

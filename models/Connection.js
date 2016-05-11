@@ -1,7 +1,6 @@
 var logger = require("./Logger");
 var events = require('events');
 var util = require('util');
-var RawData = require('./RawData');
 
 /**
  * Connection is an abstraction of a native connection so we don't have to deal with client implementation

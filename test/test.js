@@ -7,7 +7,6 @@ var tests = [
     "MockServTest",
     "SocketioClientConnectorTest",
     "ConnectionTest",
-    "RawDataTest",
     "TokenAuthenticatorTest",
     "DispatchTest",
     "DispatcherTest",

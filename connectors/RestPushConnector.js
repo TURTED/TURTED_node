@@ -1,9 +1,9 @@
 var logger = require("../models/Logger");
 var url = require('url');
 
-var RestPushConnector = function(commandBus, prefix, authToken) {
+var RestPushConnector = function(dispatcher, prefix, authToken) {
     logger.info("Init REST push connector server")
-    this.commandBus = commandBus;
+    this.dispatcher = dispatcher;
     this.prefix = prefix
     this.authToken = authToken;
 
@@ -96,12 +96,7 @@ RestPushConnector.prototype.push = function(req, res) {
             }
             //console.log(payload);
             //console.log(targets);
-             me.commandBus.send("DISPATCH", {
-                 event: event,
-                 payload: payload,
-                 targets: targets
-             });
-            
+            me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
             return true;
         });
@@ -109,7 +104,7 @@ RestPushConnector.prototype.push = function(req, res) {
         //console.log("[405] " + req.method + " to " + req.url);
         res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
         res.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
-        return
+        return;
     }
 };
 

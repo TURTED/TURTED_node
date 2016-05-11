@@ -1,4 +1,3 @@
-var RawData = require('../models/RawData');
 var Connection = require('../models/Connection');
 var ChannelManager = require('../models/ChannelManager');
 
