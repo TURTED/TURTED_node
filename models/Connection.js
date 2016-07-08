@@ -18,7 +18,7 @@ var Connection = function(nativeConnection) {
     this.nativeConnection = nativeConnection;
 
     /**
-     * COnnection should not implement specific native evetns - needs to be done by CLientConnector
+     * Connection should not implement specific native events - this needs to be done by ClientConnector
      */
     //if (typeof nativeConnection.on !== "undefined") {
     //nativeConnection.on("disconnect", this.close.bind(this));
@@ -35,7 +35,7 @@ var Connection = function(nativeConnection) {
     }
     logger.debug(this.id);
     events.EventEmitter.call(this);
-}
+};
 
 util.inherits(Connection, events.EventEmitter);
 //Connection.prototype.__proto__ = events.EventEmitter.prototype;
@@ -43,15 +43,15 @@ util.inherits(Connection, events.EventEmitter);
 Connection.prototype.receive = function(cmd, data) {
     logger.debug("TURTED Connection got a cmd", cmd, "with data", data);
     this.emit(cmd.toUpperCase(), this, data);
-}
+};
 
 Connection.prototype.close = function() {
     logger.debug("TURTED Connection", this.id, "CLOSE called");
     this.emit("CLOSE", this);
-}
+};
 
 Connection.prototype.send = function(message) {
     logger.error("NEED TO OVERWRITE THIS IN ClientConnector");
-}
+};
 
 module.exports = Connection;
