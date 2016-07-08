@@ -2,12 +2,11 @@ var Connection = require('../models/Connection');
 var User = require('../models/User');
 
 exports.userRegistersConnections = function(test) {
-    test.expect(6);
+    test.expect(5);
     var conn1 = new Connection({});
     var conn2 = new Connection({});
     var conn3 = new Connection({});
     var user1 = new User("test1");
-    var user2 = new User("test2");
 
     user1.add(conn1);
     user1.add(conn2);
@@ -21,9 +20,6 @@ exports.userRegistersConnections = function(test) {
     test.equal(user1.connections.count(), 2, "Conn1 removed");
     test.equal(user1.connections.has(conn2.id), true, "Conn1 removed, 2 still there");
     test.equal(user1.connections.has(conn3.id), true, "Conn1 removed, 3 still there");
-
-    user2.add(conn1);
-    user2.add(conn2);
 
     /* user does not listen to CLOSE of connections, needs to be done by usermanager */
     test.done();

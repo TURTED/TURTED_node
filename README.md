@@ -77,6 +77,7 @@ On the server side, an "Authenticator" will be needed to handle the data and ver
 
 ##Backend to Server (PushConnector)
 * RestPushConnector, receiving an HTTP POST request
+  * accepts an authenticator whose verify method will be called with data passed in the "auth" property to accept/refuse connection
 * Redis Pub/Sub (future plan)
 * RabbitMQ (far future plan)
 * FileTailConnector (to be considered for live-logging)

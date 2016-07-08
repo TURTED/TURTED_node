@@ -1,11 +1,11 @@
 var logger = require("../models/Logger");
 var url = require('url');
 
-var RestPushConnector = function(dispatcher, prefix, authToken) {
-    logger.info("Init REST push connector server")
+var RestPushConnector = function(dispatcher, prefix, authenticator) {
+    logger.info("Init REST push connector server");
     this.dispatcher = dispatcher;
-    this.prefix = prefix
-    this.authToken = authToken;
+    this.prefix = prefix;
+    this.authenticator = authenticator;
 
     //take parameters from request, create a dispatch and send it to dispatcher
 };
@@ -51,11 +51,11 @@ RestPushConnector.prototype.push = function(req, res) {
 
 
             var cmd = pushData.cmd || "";
-            var password = pushData.password || "";
+            var authData = pushData.auth || {};
 
             if (!("data" in pushData)) {
                 logger.debug("data parameter missing in pushdata");
-                me.fail(req, res, 404, "data missing")
+                me.fail(req, res, 404, "data missing");
                 return;
             }
 
@@ -66,11 +66,13 @@ RestPushConnector.prototype.push = function(req, res) {
             var channels = pushData.data.channels || [];
             var payload = pushData.data.payload || {};
 
-            //check password here
-            if (password !== me.authToken) {
-                //logger.info(password + "!=" + me.authToken);
-                logger.debug("Wrong password/auth token for push");
-                return me.fail(req, res, 401, "Wrong password");
+            //check auth here
+            //only if an authenticator is defined
+            if (me.authenticator) {
+                if (!(me.authenticator.verify(authData))) {
+                    logger.debug("Authenticator denied PUSH");
+                    return me.fail(req, res, 401, "Wrong auth data");
+                }
             }
 
             if (user) {
