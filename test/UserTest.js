@@ -2,7 +2,7 @@ var Connection = require('../models/Connection');
 var User = require('../models/User');
 
 exports.userRegistersConnections = function(test) {
-    test.expect(8);
+    test.expect(6);
     var conn1 = new Connection({});
     var conn2 = new Connection({});
     var conn3 = new Connection({});
@@ -25,14 +25,6 @@ exports.userRegistersConnections = function(test) {
     user2.add(conn1);
     user2.add(conn2);
 
-    conn1.close();
-    test.equal(user1.connections.count(), 2, "closed conn removed");
-
-    conn2.close();
-    conn3.close();
-    console.log(user1.connections.count());
-    test.equal(user1.connections.count(), 0, "all closed conn removed");
-    test.equal(user2.connections.count(), 0, "all closed conn removed");
-
+    /* user does not listen to CLOSE of connections, needs to be done by usermanager */
     test.done();
 };
