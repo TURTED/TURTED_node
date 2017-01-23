@@ -30,6 +30,7 @@ RestPushConnector.prototype.push = function(req, res) {
     }
 
     //here comes the push data
+    var chunks = [];
     if (req.method == 'POST') {
 
         //allow CORS
@@ -37,15 +38,18 @@ RestPushConnector.prototype.push = function(req, res) {
 
         var me = this;
         req.on('data', function(chunk) {
+            chunks.push(chunk);
+        });
+        req.on('end', function(chunk) {
             //console.log("Received body data:");
-            var rawdata = chunk.toString();
+            var rawdata = Buffer.concat(chunks);
             //console.log(rawdata);
 
             try {
                 var pushData = JSON.parse(rawdata);
             } catch (e) {
                 logger.debug(rawdata, "is not json");
-                me.fail(req, res, 404, "Data was not json");
+                me.fail(req, res, 400, "Data was not json");
                 return;
             }
 
@@ -55,7 +59,7 @@ RestPushConnector.prototype.push = function(req, res) {
 
             if (!("data" in pushData)) {
                 logger.debug("data parameter missing in pushdata");
-                me.fail(req, res, 404, "data missing");
+                me.fail(req, res, 401, "data missing");
                 return;
             }
 
