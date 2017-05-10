@@ -1,34 +1,90 @@
 {
-  "name": "turted",
-  "version": "3.1.1",
+  "_args": [
+    [
+      "turted@3.1.1",
+      "/home/pdietrich/realtime.lablue.de/public/realtime"
+    ]
+  ],
+  "_from": "turted@3.1.1",
+  "_id": "turted@3.1.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/turted",
+  "_nodeVersion": "0.10.25",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/turted-3.1.1.tgz_1485180892667_0.2917641093954444"
+  },
+  "_npmUser": {
+    "email": "xosofox@gmail.com",
+    "name": "xosofox"
+  },
+  "_npmVersion": "4.1.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "turted",
+    "raw": "turted@3.1.1",
+    "rawSpec": "3.1.1",
+    "scope": null,
+    "spec": "3.1.1",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/turted/-/turted-3.1.1.tgz",
+  "_shasum": "1adea06d17e9b19a77791b2715ad9b3eb0472c8b",
+  "_shrinkwrap": null,
+  "_spec": "turted@3.1.1",
+  "_where": "/home/pdietrich/realtime.lablue.de/public/realtime",
+  "author": {
+    "name": "Peter Dietrich"
+  },
+  "bugs": {
+    "url": "https://github.com/TURTED/TURTED_node/issues"
+  },
+  "config": {
+    "loglevel": "error"
+  },
   "dependencies": {
     "lodash-node": "*",
     "socket.io": "^1.4.5"
   },
+  "description": "The Universal Real Time Event Dispatcher",
   "devDependencies": {
     "nodeunit": "*"
   },
-  "description": "The Universal Real Time Event Dispatcher",
-  "homepage": "http://turted.xosofox.de",
-  "main": "index.js",
   "directories": {
     "test": "test"
+  },
+  "dist": {
+    "shasum": "1adea06d17e9b19a77791b2715ad9b3eb0472c8b",
+    "tarball": "https://registry.npmjs.org/turted/-/turted-3.1.1.tgz"
+  },
+  "gitHead": "466b0472001b0ba83211ff0e41bdb26a0c023eeb",
+  "homepage": "http://turted.xosofox.de",
+  "keywords": [
+    "dispatcher",
+    "event",
+    "real-time"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "xosofox",
+      "email": "xosofox@gmail.com"
+    }
+  ],
+  "name": "turted",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TURTED/TURTED_node.git"
   },
   "scripts": {
     "test": "nodeunit test/test.js"
   },
-  "keywords": [
-    "real-time",
-    "event",
-    "dispatcher"
-  ],
-  "author": "Peter Dietrich",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/TURTED/TURTED_node.git"
-  },
-  "config": {
-    "loglevel": "error"
-  }
+  "version": "3.1.1"
 }

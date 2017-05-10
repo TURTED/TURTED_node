@@ -1,3 +1,4 @@
+console.log(process.env);
 var loglevel = process.env.TURTED_LOGLEVEL;
 if (!loglevel) {
     console.log("No env TURTED_LOGLEVEL, default to error");
