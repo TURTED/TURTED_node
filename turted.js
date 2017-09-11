@@ -6,6 +6,7 @@ exports.RestPushConnector = require('./connectors/RestPushConnector');
 
 //Auth
 exports.TokenAuthenticator = require('./auth/TokenAuthenticator');
+exports.PasswordAuthenticator = require('./auth/PasswordAuthenticator');
 exports.AlwaysAcceptAuthenticator = require('./auth/AlwaysAcceptAuthenticator');
 
 exports.Dispatcher = require('./models/Dispatcher');
