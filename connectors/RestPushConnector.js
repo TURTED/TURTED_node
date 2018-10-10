@@ -104,6 +104,8 @@ RestPushConnector.prototype.push = function(req, res) {
             logger.info("User " + user + " event " + event);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
+            // @TODO
+            // of course this won't work as we need a callback/Promise to send data back after the request is done
             return pushData;
         });
     } else {
