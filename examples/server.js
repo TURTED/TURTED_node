@@ -40,7 +40,9 @@ var pushConnector = new turted.RestPushConnector(dispatcher, pushPrefix, pushAut
 server.addListener('request', function(req, res) {
     //if the url contains the "pushPrefix" (/push/), we let the pushConnector handle it
     if (pushRegExp.test(req.url)) {
-        pushConnector.push(req, res);
+        pushConnector.push(req, res, function(pushData) {
+            console.log('The data was',pushData);
+        });
     } else {
         res.end()
     }
