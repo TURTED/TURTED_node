@@ -31,10 +31,11 @@ var dispatcher = new turted.Dispatcher(connMan);
 //init push connector
 //The push connector is the "outside facing" interface to accept connections with push events to forward to users or channels
 var pushPrefix = "/push/";
-var pushAuthToken = "IamAllowed2PUSH!!!";
+var pushAuthPassword = "IamAllowed2PUSH!!!";
 var pushRegExp = new RegExp(pushPrefix);
+var pushAuthenticator = new turted.PasswordAuthenticator(pushAuthPassword);
 
-var pushConnector = new turted.RestPushConnector(dispatcher, pushPrefix, pushAuthToken);
+var pushConnector = new turted.RestPushConnector(dispatcher, pushPrefix, pushAuthenticator);
 
 server.addListener('request', function(req, res) {
     //if the url contains the "pushPrefix" (/push/), we let the pushConnector handle it

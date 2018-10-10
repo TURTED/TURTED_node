@@ -1,11 +1,13 @@
+var logger = require("../models/Logger");
 var PasswordAuthenticator = function(password) {
-    if (!password) console.error("No Password");
+    if (!password) logger.error("No Password in PasswordAuthenticator");
     this.password = password;
 };
 
 PasswordAuthenticator.prototype.verify = function(data) {
-    data = data || "";
-    return data === this.password;
+    data = data || {};
+    if (!data.hasOwnProperty("password")) return false;
+    return data.password === this.password;
 };
 
 module.exports = PasswordAuthenticator;

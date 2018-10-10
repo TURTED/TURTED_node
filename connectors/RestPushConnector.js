@@ -103,7 +103,7 @@ RestPushConnector.prototype.push = function(req, res) {
             }
             //console.log(payload);
             //console.log(targets);
-	    logger.info("User " + user + " event "+event);
+            logger.info("User " + user + " event " + event);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
             return true;
