@@ -49,8 +49,7 @@ RestPushConnector.prototype.push = function(req, res) {
                 var pushData = JSON.parse(rawdata);
             } catch (e) {
                 logger.info(rawdata, "is not json");
-                me.fail(req, res, 400, "Data was not json");
-                return;
+                return me.fail(req, res, 400, "Data was not json");
             }
 
 
@@ -59,8 +58,7 @@ RestPushConnector.prototype.push = function(req, res) {
 
             if (!("data" in pushData)) {
                 logger.debug("data parameter missing in pushdata");
-                me.fail(req, res, 401, "data missing");
-                return;
+                return me.fail(req, res, 401, "data missing");
             }
 
             var event = pushData.data.event || "";
@@ -106,24 +104,26 @@ RestPushConnector.prototype.push = function(req, res) {
             logger.info("User " + user + " event " + event);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
-            return true;
+            return pushData;
         });
     } else {
         logger.info("[405] " + req.method + " to " + req.url);
         res.writeHead(405, "Method not supported", {'Content-Type': 'text/html'});
         res.end('<html><head><title>405 - Method not supported</title></head><body><h1>Method not supported.</h1></body></html>');
-        return;
+        return false;
     }
 };
 
 RestPushConnector.prototype.success = function(req, res, code, message) {
     res.statusCode = code;
     res.end(message);
+    return true;
 };
 
 RestPushConnector.prototype.fail = function(req, res, code, message) {
     res.statusCode = code;
     res.end(message);
+    return false;
 };
 
 module.exports = RestPushConnector;
