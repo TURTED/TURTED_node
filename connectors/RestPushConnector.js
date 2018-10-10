@@ -19,7 +19,7 @@ RestPushConnector.prototype.cors = function(req, res) {
     res.setHeader('Access-Control-Allow-Headers', 'content-type');
 };
 
-RestPushConnector.prototype.push = function(req, res) {
+RestPushConnector.prototype.push = function(req, res, callback) {
     var pushUrl = req.url.replace(this.prefix, '');
 
     //preflight request
@@ -104,9 +104,11 @@ RestPushConnector.prototype.push = function(req, res) {
             logger.info("User " + user + " event " + event);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
-            // @TODO
-            // of course this won't work as we need a callback/Promise to send data back after the request is done
-            return pushData;
+            // use the optional callback to send data back after the request is done
+            if (typeof callback === "function") {
+                callback(pushData);
+            }
+            return true;
         });
     } else {
         logger.info("[405] " + req.method + " to " + req.url);
