@@ -53,20 +53,10 @@ RestPushConnector.prototype.push = function(req, res, callback) {
             }
 
 
-            var cmd = pushData.cmd || "";
             var authData = pushData.auth || {};
-
-            if (!("data" in pushData)) {
-                logger.debug("data parameter missing in pushdata");
-                return me.fail(req, res, 401, "data missing");
-            }
-
-            var event = pushData.data.event || "";
-            var user = pushData.data.user || "";
-            var users = pushData.data.users || [];
-            var channel = pushData.data.channel || "";
-            var channels = pushData.data.channels || [];
-            var payload = pushData.data.payload || {};
+            var event = pushData.event || "";
+            var targets = pushData.targets || {};
+            var payload = pushData.payload || {};
 
             //check auth here
             //only if an authenticator is defined
@@ -77,31 +67,6 @@ RestPushConnector.prototype.push = function(req, res, callback) {
                 }
             }
 
-            if (user) {
-                if (typeof user === "string") {
-                    users.push(user);
-                    logger.debug("User " + user);
-                }
-            }
-
-            if (channel) {
-                if (typeof channel === "string") {
-                    channels.push(channel);
-                }
-            }
-
-            //create dispatch
-            var targets = {};
-            if (channels.length > 0) targets["channels"] = channels;
-            if (users.length > 0) targets["users"] = users;
-            if (cmd === "notifyAll") {
-                targets = {
-                    broadcast: true
-                };
-            }
-            //console.log(payload);
-            //console.log(targets);
-            logger.info("User " + user + " event " + event);
             me.dispatcher.dispatchEventDataTarget(event, payload, targets);
             me.success(req, res, 200, "OK");
             // use the optional callback to send data back after the request is done

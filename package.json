@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "lodash-node": "*",
-    "socket.io": "^1.4.5"
+    "socket.io": "^2.3.0"
   },
   "description": "The Universal Real Time Event Dispatcher",
   "devDependencies": {
@@ -48,5 +48,5 @@
   "scripts": {
     "test": "nodeunit test/test.js"
   },
-  "version": "3.2.2"
+  "version": "3.3.3"
 }
