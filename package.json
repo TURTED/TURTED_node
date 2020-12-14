@@ -1,42 +1,4 @@
 {
-  "_args": [
-    [
-      "turted@3.1.1",
-      "/home/pdietrich/realtime.lablue.de/public/realtime"
-    ]
-  ],
-  "_from": "turted@3.1.1",
-  "_id": "turted@3.1.1",
-  "_inCache": true,
-  "_installable": true,
-  "_location": "/turted",
-  "_nodeVersion": "0.10.25",
-  "_npmOperationalInternal": {
-    "host": "packages-12-west.internal.npmjs.com",
-    "tmp": "tmp/turted-3.1.1.tgz_1485180892667_0.2917641093954444"
-  },
-  "_npmUser": {
-    "email": "xosofox@gmail.com",
-    "name": "xosofox"
-  },
-  "_npmVersion": "4.1.1",
-  "_phantomChildren": {},
-  "_requested": {
-    "name": "turted",
-    "raw": "turted@3.1.1",
-    "rawSpec": "3.1.1",
-    "scope": null,
-    "spec": "3.1.1",
-    "type": "version"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/turted/-/turted-3.1.1.tgz",
-  "_shasum": "1adea06d17e9b19a77791b2715ad9b3eb0472c8b",
-  "_shrinkwrap": null,
-  "_spec": "turted@3.1.1",
-  "_where": "/home/pdietrich/realtime.lablue.de/public/realtime",
   "author": {
     "name": "Peter Dietrich"
   },
@@ -86,5 +48,5 @@
   "scripts": {
     "test": "nodeunit test/test.js"
   },
-  "version": "3.2.1"
+  "version": "3.2.2"
 }

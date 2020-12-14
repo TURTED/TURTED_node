@@ -5,9 +5,14 @@ var PasswordAuthenticator = function(password) {
 };
 
 PasswordAuthenticator.prototype.verify = function(data) {
-    data = data || {};
-    if (!data.hasOwnProperty("password")) return false;
-    return data.password === this.password;
+    if (typeof data === 'object') {
+        if (!data.hasOwnProperty("password")) return false;
+        return data.password === this.password;
+    }
+    if (typeof data === 'string') {
+        return data === this.password;
+    }
+    return false;
 };
 
 module.exports = PasswordAuthenticator;

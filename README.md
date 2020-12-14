@@ -39,19 +39,19 @@ Especially handling channels and providing a clean and operational client interf
 
 [![Build Status](https://travis-ci.org/TURTED/TURTED_node.png?branch=master)](https://travis-ci.org/TURTED/TURTED_node)
 
-#Glossary#
+#Glossary
 Since TURTED is intended to dispatch/emit events from any arbitrary backend app via a central server to many clients, we have three parties included:
 * the backend app (PHP, Java, ...)
 * the TURTED server for handling real-time connections (node.js)
 * the clients (browsers, connected via websocket/socket.io/sockjs or any other connection allowing push data)
 
-#Internal Handling#
+#Internal Handling
 To allow for different transports, the idea is to abstract the underlying framework (socket.io, sockjs, ...)
 So all connections between the TURTED client and TURTED server are layers on top of the used transport.
 To achieve this, all native connections (socket.io, sockjs, ...) are encapsulated into a "Connection" with a clear interface.
 All interactions need to be translated by the Connection to and from the native connection.
 
-#Protocol#
+#Protocol
 ##Backend to Server
 notifyUser (username, eventname, payload)
 notifyChannel (channelname, eventname, payload)
