@@ -6,6 +6,7 @@ node.js implementation of a universal real time event dispatcher
 Basic idea:
 -----------
 Create an abstraction protocol for handling real time connections to push events from server to client.
+
 Users can log in and join channels so the server can push messages to selected clients (via username or channel)
 
 
