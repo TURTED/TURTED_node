@@ -47,5 +47,5 @@
   "scripts": {
     "test": "nodeunit test/test.js"
   },
-  "version": "3.3.3"
+  "version": "4.0.1"
 }
